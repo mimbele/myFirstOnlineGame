@@ -1,5 +1,23 @@
 package
 {
+	import flash.display.Sprite;
+	import starling.core.Starling;
+	
+	[SWF(frameRate="60",width="940", height="540", backgroundColor="0x333333")]
+	public class Main extends Sprite
+	{
+		private var myStarling:Starling;
+		public function Main()
+		{
+			myStarling = new Starling(Game, stage);
+			myStarling.antiAliasing = 1;
+			myStarling.start();
+		}
+	}
+}
+
+/* package
+{
 	import flash.desktop.NativeApplication;
 	import flash.events.Event;
 	import flash.display.Sprite;
@@ -8,10 +26,10 @@ package
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
 	
-	/**
+	/*
 	 * ...
 	 * @author mimbele
-	 */
+	 
 	public class Main extends Sprite 
 	{
 		
@@ -23,6 +41,8 @@ package
 			
 			// touch or gesture?
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
+			
+			
 			
 			// Entry point
 			// New to AIR? Please read *carefully* the readme.txt files!
@@ -36,4 +56,4 @@ package
 		
 	}
 	
-}
+} */
