@@ -14,7 +14,6 @@ package objects
 		
 		public function backGround(isPlayer:Boolean)
 		{
-			
 			super();
 			_isPlayer = isPlayer;
 			
