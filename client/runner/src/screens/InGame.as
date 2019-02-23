@@ -28,8 +28,13 @@ package screens
 		private var timeCurrent:Number;
 		private var elapsed:Number;
 		
-		private var isJumping:Boolean = false;
-		private var jumpTarget:Number; //the "y" value we want to go when jumping. set in touch handler
+		private var velY:Number;
+		private var state:int;
+		
+		private static const GRAVITY:Number = 9.81;
+		private static const IDLE:int = 0;
+		private static const JUMPING:int = 1;
+		private static const CROUCHING:int = 2;
 		
 		public function InGame() 
 		{
@@ -48,8 +53,11 @@ package screens
 		
 		private function drawGame():void
 		{
+			timeCurrent = getTimer();
+			velY = 0;
 			this.addEventListener(Event.ENTER_FRAME, onGameTick);
 			
+			state = IDLE;
 			bgPlayer = new backGround(true);
 			bgOpponent = new backGround(false);
 			this.addChild(bgPlayer);
@@ -66,16 +74,13 @@ package screens
 		
 		protected function this_touchHandler(e:TouchEvent):void 
 		{
-			if (isJumping){
-				return;
-			}
 			var touch:Touch = e.getTouch(stage);
 			if(touch)
             {
-                if(touch.phase == TouchPhase.BEGAN && player.y == 0)
+                if(touch.phase == TouchPhase.BEGAN && state == IDLE)
                 {
-					jumpTarget = -175;
-					isJumping = true;
+					state = JUMPING;
+					velY = -400;
 				}
             }
 		}
@@ -87,25 +92,17 @@ package screens
 			timePrevious = timeCurrent;
 			timeCurrent = getTimer();
 			elapsed = (timeCurrent - timePrevious) * 0.001;
+
+			// adjust velocity
+			player.y += velY * elapsed;
+			// adjust gravity
+			velY += GRAVITY * elapsed * 100;
 			
-			if (isJumping){
-				
-				if (jumpTarget == -175){
-					
-					player.y += (jumpTarget - player.y) * elapsed * 5;
-					if (player.y - jumpTarget < 20){
-						jumpTarget = 0;
-					}
-				} 
-				else if (jumpTarget == 0){
-					
-					player.y += (jumpTarget - player.y) * elapsed * 5;
-					if (Math.abs(player.y - jumpTarget) < 5){
-						player.y = 0;
-						isJumping = false;
-					}
-					
-				}
+			if (player.y >= 0)
+			{
+				player.y = 0.0;
+				velY = 0.0;
+				state = IDLE;
 			}
 		}
 		
