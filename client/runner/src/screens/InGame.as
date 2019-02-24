@@ -13,6 +13,7 @@ package screens
 	import flash.utils.getTimer;
 
 	import Assets;
+	import objects.Obstacle;
 	/**
 	 * ...
 	 * @author mimbele
@@ -27,6 +28,8 @@ package screens
 		private var timePrevious:Number;
 		private var timeCurrent:Number;
 		private var elapsed:Number;
+		private var speed:Number = 4;
+		private var obstacleGap:Number;
 		
 		private var velY:Number;
 		private var state:int;
@@ -35,6 +38,8 @@ package screens
 		private static const IDLE:int = 0;
 		private static const JUMPING:int = 1;
 		private static const CROUCHING:int = 2;
+		
+		private var obstaclesToAnimate:Vector.<Obstacle>;
 		
 		public function InGame() 
 		{
@@ -53,13 +58,16 @@ package screens
 		
 		private function drawGame():void
 		{
+			this.obstaclesToAnimate = new Vector.<objects.Obstacle>;
+			
 			timeCurrent = getTimer();
 			velY = 0;
+			obstacleGap = 0;
 			this.addEventListener(Event.ENTER_FRAME, onGameTick);
 			
 			state = IDLE;
-			bgPlayer = new backGround(true);
-			bgOpponent = new backGround(false);
+			bgPlayer = new backGround(true, speed);
+			bgOpponent = new backGround(false, speed);
 			this.addChild(bgPlayer);
 			this.addChild(bgOpponent);
 			
@@ -80,7 +88,7 @@ package screens
                 if(touch.phase == TouchPhase.BEGAN && state == IDLE)
                 {
 					state = JUMPING;
-					velY = -400;
+					velY = -500;
 				}
             }
 		}
@@ -104,9 +112,50 @@ package screens
 				velY = 0.0;
 				state = IDLE;
 			}
+			createObstacle();
+			animateObstacles();
+		}
+		
+		private function createObstacle():void 
+		{
+			if (Math.random() < 0.03 && obstacleGap > 50){
+				var obstacle:Obstacle = new Obstacle();
+				obstacle.x = stage.stageWidth;
+				obstacle.y = stage.stageHeight - obstacle.height - 10;
+				
+				this.addChild(obstacle);
+				obstaclesToAnimate.push(obstacle);
+				obstacleGap = 0;
+			} else{
+				obstacleGap ++;
+			}
+		}
+		
+		
+		private function animateObstacles():void
+		{
+			var obstacleToTrack:Obstacle;
+			
+			for(var i:uint = 0; i < obstaclesToAnimate.length; i++)
+			{
+				obstacleToTrack = obstaclesToAnimate[i];
+				
+				obstacleToTrack.x -= speed;
+				
+				if (obstacleToTrack.bounds.intersects(player.bounds))
+				{
+					obstaclesToAnimate.splice(i, 1);
+					this.removeChild(obstacleToTrack);
+				}
+				
+				if (obstacleToTrack.x < -50)
+				{
+					obstaclesToAnimate.splice(i, 1);
+					this.removeChild(obstacleToTrack);	
+				}
+			}
 		}
 		
 	}
 	
-
 }

@@ -20,6 +20,9 @@ package
 		[Embed(source="../media/graphics/opponent.png")]
 		public static const opponent:Class;
 		
+		[Embed(source="../media/graphics/obstacle.png")]
+		public static const obstacle:Class;
+		
 		private static var gameTextures:Dictionary = new Dictionary();
 		
 		[Embed(source="../media/fonts/IMPACT.TTF", fontFamily="myFont", mimeType="application/x-font", embedAsCFF="false")]

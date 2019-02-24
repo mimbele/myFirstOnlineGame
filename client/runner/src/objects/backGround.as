@@ -10,12 +10,13 @@ package objects
 		private var image2:Image;
 		private var _isPlayer:Boolean; //true=player, false=opponent
 		
-		private var _speed:Number = 4;
+		private var _speed:Number;
 		
-		public function backGround(isPlayer:Boolean)
+		public function backGround(isPlayer:Boolean, speed:Number)
 		{
 			super();
 			_isPlayer = isPlayer;
+			_speed = speed;
 			
 			if (isPlayer){
 				image1 = new Image(Assets.getTexture("bgPlayer"));
