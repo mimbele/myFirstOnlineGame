@@ -6,12 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0a31a95-440c-4529-a865-2a21b6bdca9b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/runnergame/RoomExtension.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/runnergame/RoomExtension.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../TODO" beforeDir="false" afterPath="$PROJECT_DIR$/../../TODO" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/runner/src/screens/InGame.as" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/runner/src/screens/InGame.as" afterDir="false" />
-    </list>
+    <list default="true" id="b0a31a95-440c-4529-a865-2a21b6bdca9b" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -148,7 +143,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551195601981" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551196066880" />
     <property name="last_opened_file_path" value="$USER_HOME$/SmartFoxServer_2X/SFS2X/extensions/Runner" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -180,12 +175,12 @@
       <updated>1550654348396</updated>
       <workItem from="1550654352429" duration="797000" />
       <workItem from="1550657459502" duration="1401000" />
-      <workItem from="1551189486639" duration="4087000" />
+      <workItem from="1551189486639" duration="4683000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6285000" />
+    <option name="totallyTimeSpent" value="6881000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">

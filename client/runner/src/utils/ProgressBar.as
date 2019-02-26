@@ -14,22 +14,23 @@ package utils
         
         private function init(width:int, height:int):void
         {
-            var scale:Number = 1//Starling.contentScaleFactor;
+            var scale:Number = 1;
             var padding:Number = height * 0.2;
             var cornerRadius:Number = padding * scale * 2;
             
             // create black rounded box for background
             
             var bgShape:Shape = new Shape();
-            bgShape.graphics.beginFill(0x0, 0.6);
+            bgShape.graphics.beginFill(0x0, 1);
             bgShape.graphics.drawRoundRect(0, 0, width*scale, height*scale, cornerRadius, cornerRadius);
             bgShape.graphics.endFill();
             addChild(bgShape);
 			
 			fill = new Shape();
-            fill.graphics.beginFill(0xFF, 0.6);
+            fill.graphics.beginFill(0x00FF33, 1);
             fill.graphics.drawRoundRect(2, 2, width*scale-4, height*scale-4, cornerRadius, cornerRadius);
             fill.graphics.endFill();
+			fill.scaleX = 0;
 			addChild(fill);
 			
 
