@@ -1,59 +1,46 @@
 package
 {
 	import flash.display.Sprite;
+	import flash.display.StageAlign;
+	import flash.events.Event;
+	import screens.InGame;
 	import starling.core.Starling;
+	import utils.ProgressBar;
 	
 	[SWF(frameRate="60",width="940", height="540", backgroundColor="0x333333")]
 	public class Main extends Sprite
 	{
 		private var myStarling:Starling;
+		private var progress:ProgressBar;
 		public function Main()
 		{
-			myStarling = new Starling(Game, stage);
+
+			//stage.scaleMode = StageScaleMode.SHOW_ALL;
+			stage.align 	= StageAlign.TOP_LEFT;
+			
+			progress = new ProgressBar(500, 40);
+			stage.addChild(progress);
+			loaderInfo.addEventListener(Event.COMPLETE, loader_eventCompleteHandler);
+		}
+		
+		private function loader_eventCompleteHandler(e:Event):void 
+		{
+			progress.x = (stage.stageWidth - progress.width ) * 0.5;
+			progress.y = (stage.stageHeight- progress.height ) * 0.5;
+			loaderInfo.removeEventListener(Event.COMPLETE, loader_eventCompleteHandler);
+			progress.ratio = 0.3;
+			
+			myStarling = new Starling(InGame, stage);
 			myStarling.antiAliasing = 1;
-			myStarling.start();
+			myStarling.addEventListener(Event.CONTEXT3D_CREATE, myStarling_contex3DCreateHandler);
+					
+			
+		}
+		
+		private function myStarling_contex3DCreateHandler(e:*):void 
+		{
+			myStarling.removeEventListener(Event.CONTEXT3D_CREATE, myStarling_contex3DCreateHandler);
+			progress.ratio = 0.6;
 		}
 	}
 }
-
-/* package
-{
-	import flash.desktop.NativeApplication;
-	import flash.events.Event;
-	import flash.display.Sprite;
-	import flash.display.StageAlign;
-	import flash.display.StageScaleMode;
-	import flash.ui.Multitouch;
-	import flash.ui.MultitouchInputMode;
-	
-	/*
-	 * ...
-	 * @author mimbele
-	 
-	public class Main extends Sprite 
-	{
-		
-		public function Main() 
-		{
-			stage.scaleMode = StageScaleMode.NO_SCALE;
-			stage.align = StageAlign.TOP_LEFT;
-			stage.addEventListener(Event.DEACTIVATE, deactivate);
-			
-			// touch or gesture?
-			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
-			
-			
-			
-			// Entry point
-			// New to AIR? Please read *carefully* the readme.txt files!
-		}
-		
-		private function deactivate(e:Event):void 
-		{
-			// make sure the app behaves well (or exits) when in background
-			//NativeApplication.nativeApplication.exit();
-		}
-		
-	}
-	
-} */

@@ -22,7 +22,14 @@ package screens
 	{
 		private var bgPlayer:backGround;
 		private var bgOpponent:backGround;
-		private var player:Player;
+		
+		
+		public function get player():Player 
+		{
+			return _player;
+		}
+		
+		private var _player:Player;
 		private var opponent:Player;
 		
 		private var timePrevious:Number;
@@ -30,6 +37,7 @@ package screens
 		private var elapsed:Number;
 		private var speed:Number = 4;
 		private var obstacleGap:Number;
+		private var score:Number;
 		
 		private var velY:Number;
 		private var state:int;
@@ -63,6 +71,7 @@ package screens
 			timeCurrent = getTimer();
 			velY = 0;
 			obstacleGap = 0;
+			score = 0;
 			this.addEventListener(Event.ENTER_FRAME, onGameTick);
 			
 			state = IDLE;
@@ -71,7 +80,7 @@ package screens
 			this.addChild(bgPlayer);
 			this.addChild(bgOpponent);
 			
-			player = new Player(true);
+			_player = new Player(true);
 			opponent = new Player(false);
 			this.addChild(player);
 			this.addChild(opponent);
@@ -100,7 +109,9 @@ package screens
 			timePrevious = timeCurrent;
 			timeCurrent = getTimer();
 			elapsed = (timeCurrent - timePrevious) * 0.001;
-
+			
+			score++;
+			
 			// adjust velocity
 			player.y += velY * elapsed;
 			// adjust gravity
@@ -113,17 +124,17 @@ package screens
 				state = IDLE;
 			}
 			createObstacle();
-			animateObstacles();
+			//animateObstacles();
 		}
 		
 		private function createObstacle():void 
 		{
 			if (Math.random() < 0.03 && obstacleGap > 50){
-				var obstacle:Obstacle = new Obstacle();
+				var obstacle:Obstacle = new Obstacle(this, speed);
 				obstacle.x = stage.stageWidth;
 				obstacle.y = stage.stageHeight - obstacle.height - 10;
 				
-				this.addChild(obstacle);
+				//this.addChild(obstacle);
 				obstaclesToAnimate.push(obstacle);
 				obstacleGap = 0;
 			} else{
@@ -131,29 +142,14 @@ package screens
 			}
 		}
 		
-		
-		private function animateObstacles():void
+		public function disposeTemporarily():void
 		{
-			var obstacleToTrack:Obstacle;
-			
-			for(var i:uint = 0; i < obstaclesToAnimate.length; i++)
-			{
-				obstacleToTrack = obstaclesToAnimate[i];
-				
-				obstacleToTrack.x -= speed;
-				
-				if (obstacleToTrack.bounds.intersects(player.bounds))
-				{
-					obstaclesToAnimate.splice(i, 1);
-					this.removeChild(obstacleToTrack);
-				}
-				
-				if (obstacleToTrack.x < -50)
-				{
-					obstaclesToAnimate.splice(i, 1);
-					this.removeChild(obstacleToTrack);	
-				}
-			}
+			this.visible = false;
+		}
+		
+		public function initialize():void
+		{
+			this.visible = true;
 		}
 		
 	}

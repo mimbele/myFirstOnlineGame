@@ -1,6 +1,7 @@
 package 
 {
 	import screens.InGame;
+	import screens.Loading;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	
@@ -10,7 +11,8 @@ package
 	 */
 	public class Game extends Sprite
 	{
-		private var screenInGame:InGame;
+		private var inGameScene:InGame;
+		private var loadingScene:Loading;
 		public function Game() 
 		{
 			super();
@@ -20,8 +22,14 @@ package
 		
 		private function onAddedToStage(event:Event):void{
 						
-			screenInGame = new InGame();
-			this.addChild(screenInGame);
+			inGameScene = new InGame();
+			this.addChild(inGameScene);
+			
+			loadingScene = new Loading();
+			this.addChild(loadingScene);
+			
+			inGameScene.disposeTemporarily();
+			loadingScene.initialize();
 		}
 		
 	}

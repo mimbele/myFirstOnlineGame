@@ -14,6 +14,12 @@ package
 		[Embed(source="../media/graphics/bgOpponent.png")] //940*250
 		public static const bgOpponent:Class;
 		
+		[Embed(source="../media/graphics/loading_bg.png")]
+		public static const loaging_bg:Class;
+		
+		//[Embed(source="../media/graphics/backButton.png")]
+		//public static const backButton:Class;
+		
 		[Embed(source="../media/graphics/player.png")]
 		public static const player:Class;
 		
