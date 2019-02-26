@@ -1,5 +1,6 @@
 package objects
 {
+	import screens.InGame;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
@@ -11,12 +12,14 @@ package objects
 		private var _isPlayer:Boolean; //true=player, false=opponent
 		
 		private var _speed:Number;
+		private var inGame:InGame;
 		
-		public function backGround(isPlayer:Boolean, speed:Number)
+		public function backGround(isPlayer:Boolean, speed:Number, inGame:InGame)
 		{
 			super();
 			_isPlayer = isPlayer;
 			_speed = speed;
+			this.inGame = inGame;
 			
 			if (isPlayer){
 				image1 = new Image(Assets.getTexture("bgPlayer"));
@@ -53,8 +56,8 @@ package objects
 		
 		private function onEnterFrame(event:Event):void
 		{
-			image1.x -= _speed;
-			image2.x -= _speed;
+			image1.x -= _speed * inGame.deltaTime;
+			image2.x -= _speed * inGame.deltaTime;
 			if (image1.x < -(stage.stageWidth)) {
 				image1.x = 0;
 				image2.x = image2.width;

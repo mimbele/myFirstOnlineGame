@@ -52,16 +52,18 @@ package
 		private function connect():void
 		{
 			NetworkManager.getInstance().Connect("127.0.0.1", 9933);
-			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.CONNECTION, function (e):void{progress.ratio = 0.65; });
-			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.LOGIN, sfs_loginHandler);
+			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.CONNECTION, function (e):void{progress.ratio = 0.75; });
+			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.LOGIN, onLogin);
 		}
 		
-		private function sfs_loginHandler(e:SFSEvent):void 
+		private function onLogin(e:SFSEvent):void 
 		{
 			progress.ratio = 1;
-			var timer:Timer = new Timer(1000, 1);
+			var timer:Timer = new Timer(500, 1);
 			timer.addEventListener(TimerEvent.TIMER_COMPLETE, function (e):void {myStarling.start(); stage.removeChild(progress); });
 			timer.start();
+			
+			NetworkManager.getInstance().sfs.removeEventListener(SFSEvent.LOGIN, onLogin);
 		}
 	}
 }

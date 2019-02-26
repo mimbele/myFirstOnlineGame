@@ -8,41 +8,33 @@ package objects
 	public class Obstacle extends Sprite
 	{
 		private var ObstacleImage:Image;
-		private var gameRef:InGame;
+		private var inGame:InGame;
 		private var obSpeed:Number;
 		
-		public function Obstacle(inGame:InGame)
+		public function Obstacle(inGame:InGame, speed:Number)
 		{
 			super();
 			
-			gameRef = inGame;
-			obSpeed = inGame.speed;
-			
 			ObstacleImage = new Image(Assets.getTexture("obstacle"));
-			//ObstacleImage.x = ObstacleImage.texture.width * 0.5;
-			//ObstacleImage.y = ObstacleImage.texture.height * 0.5;
 			this.addChild(ObstacleImage);
 			
-			this.addEventListener(Event.ENTER_FRAME, this_enterFrameHandler);
+			this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
 			
+			this.inGame = inGame;
 			inGame.addChild(this);
+			obSpeed = speed;
 		}
 		
-		private function this_enterFrameHandler(e:Event):void 
+		private function onEnterFrame(e:Event):void 
 		{
-			this.x -= obSpeed;
-			
-			
-			
-			if (this.bounds.intersects(gameRef.player.bounds))
+			this.x -= obSpeed * inGame.deltaTime;
+			if (this.bounds.intersects(inGame.player.bounds))
 			{
-				gameRef.removeChild(this);
-				
+				inGame.removeChild(this);
 			}
-			
 			if (this.x < -50)
 			{
-				gameRef.removeChild(this);	
+				inGame.removeChild(this);	
 			}
 		}
 	}

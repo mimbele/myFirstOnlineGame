@@ -27,15 +27,8 @@ package screens
 		{
 			return _player;
 		}
-		
-		public function get speed():Number 
-		{
-			return _speed;
-		}
-		
-		public function set speed(value:Number):void 
-		{
-			_speed = value;
+		public function get deltaTime():Number{
+			return elapsed;
 		}
 		
 		private var _player:Player;
@@ -44,46 +37,43 @@ package screens
 		private var timePrevious:Number;
 		private var timeCurrent:Number;
 		private var elapsed:Number;
-		private var _speed:Number = 4;
 		private var obstacleGap:Number;
 		
 		private var velY:Number;
 		private var state:int;
 		
 		private static const GRAVITY:Number = 9.81;
+		private static const BG_SPEED:Number = 400;
+		private static const OBSTACLE_SPEED:Number = 400;
+		
 		private static const IDLE:int = 0;
 		private static const JUMPING:int = 1;
 		private static const CROUCHING:int = 2;
 		
-		private var obstaclesToAnimate:Vector.<Obstacle>;
+		
 		
 		public function InGame() 
 		{
 			super();
 			this.addEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
-			
 		}
 		
 		private function onAddedToStage(event:Event):void
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			
 			drawGame();
-			
 		}
 		
 		private function drawGame():void
 		{
-			this.obstaclesToAnimate = new Vector.<objects.Obstacle>;
-			
 			timeCurrent = getTimer();
 			velY = 0;
 			obstacleGap = 0;
-			this.addEventListener(Event.ENTER_FRAME, onGameTick);
-			
 			state = IDLE;
-			bgPlayer = new backGround(true, speed);
-			bgOpponent = new backGround(false, speed);
+			elapsed = 0;
+			
+			bgPlayer = new backGround(true, BG_SPEED, this);
+			bgOpponent = new backGround(false, BG_SPEED, this);
 			this.addChild(bgPlayer);
 			this.addChild(bgOpponent);
 			
@@ -92,8 +82,8 @@ package screens
 			this.addChild(player);
 			this.addChild(opponent);
 			
+			this.addEventListener(Event.ENTER_FRAME, onGameTick);
 			this.addEventListener(TouchEvent.TOUCH, this_touchHandler);
-			//stage.addEventListener(KeyboardEvent.KEY_DOWN, stage_keyDownHandler);
 		}
 		
 		protected function this_touchHandler(e:TouchEvent):void 
@@ -120,7 +110,7 @@ package screens
 			// adjust velocity
 			player.y += velY * elapsed;
 			// adjust gravity
-			velY += GRAVITY * elapsed * 100;
+			velY += GRAVITY * elapsed * 150;
 			
 			if (player.y >= 0)
 			{
@@ -134,7 +124,7 @@ package screens
 		private function createObstacle():void 
 		{
 			if (Math.random() < 0.03 && obstacleGap > 50){
-				var obstacle:Obstacle = new Obstacle(this);
+				var obstacle:Obstacle = new Obstacle(this, OBSTACLE_SPEED);
 				obstacle.x = stage.stageWidth;
 				obstacle.y = stage.stageHeight - obstacle.height - 10;
 				

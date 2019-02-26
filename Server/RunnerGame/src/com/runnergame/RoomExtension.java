@@ -13,6 +13,5 @@ public class RoomExtension extends  SFSExtension
     {
         addEventHandler(SFSEventType.USER_JOIN_ROOM, UserJoinHandler.class);
         GameStarted = false;
-        SmartFoxServer.getInstance().getTaskScheduler().schedule()
     }
 }
