@@ -23,10 +23,19 @@ package screens
 		private var bgPlayer:backGround;
 		private var bgOpponent:backGround;
 		
-		
 		public function get player():Player 
 		{
 			return _player;
+		}
+		
+		public function get speed():Number 
+		{
+			return _speed;
+		}
+		
+		public function set speed(value:Number):void 
+		{
+			_speed = value;
 		}
 		
 		private var _player:Player;
@@ -35,9 +44,8 @@ package screens
 		private var timePrevious:Number;
 		private var timeCurrent:Number;
 		private var elapsed:Number;
-		private var speed:Number = 4;
+		private var _speed:Number = 4;
 		private var obstacleGap:Number;
-		private var score:Number;
 		
 		private var velY:Number;
 		private var state:int;
@@ -71,7 +79,6 @@ package screens
 			timeCurrent = getTimer();
 			velY = 0;
 			obstacleGap = 0;
-			score = 0;
 			this.addEventListener(Event.ENTER_FRAME, onGameTick);
 			
 			state = IDLE;
@@ -109,9 +116,7 @@ package screens
 			timePrevious = timeCurrent;
 			timeCurrent = getTimer();
 			elapsed = (timeCurrent - timePrevious) * 0.001;
-			
-			score++;
-			
+
 			// adjust velocity
 			player.y += velY * elapsed;
 			// adjust gravity
@@ -124,32 +129,20 @@ package screens
 				state = IDLE;
 			}
 			createObstacle();
-			//animateObstacles();
 		}
 		
 		private function createObstacle():void 
 		{
 			if (Math.random() < 0.03 && obstacleGap > 50){
-				var obstacle:Obstacle = new Obstacle(this, speed);
+				var obstacle:Obstacle = new Obstacle(this);
 				obstacle.x = stage.stageWidth;
 				obstacle.y = stage.stageHeight - obstacle.height - 10;
 				
-				//this.addChild(obstacle);
-				obstaclesToAnimate.push(obstacle);
+				
 				obstacleGap = 0;
 			} else{
 				obstacleGap ++;
 			}
-		}
-		
-		public function disposeTemporarily():void
-		{
-			this.visible = false;
-		}
-		
-		public function initialize():void
-		{
-			this.visible = true;
 		}
 		
 	}

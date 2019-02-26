@@ -4,42 +4,45 @@ package objects
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
-
 	
 	public class Obstacle extends Sprite
 	{
-		private var inGame:InGame;
 		private var ObstacleImage:Image;
-		private var _speed:Number;
+		private var gameRef:InGame;
+		private var obSpeed:Number;
 		
-		public function Obstacle(inGame:InGame, speed:Number)
+		public function Obstacle(inGame:InGame)
 		{
 			super();
-			_speed = speed;
-			this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+			
+			gameRef = inGame;
+			obSpeed = inGame.speed;
 			
 			ObstacleImage = new Image(Assets.getTexture("obstacle"));
+			//ObstacleImage.x = ObstacleImage.texture.width * 0.5;
+			//ObstacleImage.y = ObstacleImage.texture.height * 0.5;
 			this.addChild(ObstacleImage);
 			
-			ObstacleImage.x = ObstacleImage.texture.width * 0.5;
-			ObstacleImage.y = ObstacleImage.texture.height * 0.5;
+			this.addEventListener(Event.ENTER_FRAME, this_enterFrameHandler);
 			
-			this.inGame = inGame;
-			this.inGame.addChild(this);
+			inGame.addChild(this);
 		}
 		
-		private function onEnterFrame(e:Event):void 
+		private function this_enterFrameHandler(e:Event):void 
 		{
-			this.x -= _speed;
+			this.x -= obSpeed;
 			
-			if (this.bounds.intersects(inGame.player.bounds))
+			
+			
+			if (this.bounds.intersects(gameRef.player.bounds))
 			{
-				inGame.removeChild(this);
+				gameRef.removeChild(this);
+				
 			}
 			
 			if (this.x < -50)
 			{
-				inGame.removeChild(this);
+				gameRef.removeChild(this);	
 			}
 		}
 	}
