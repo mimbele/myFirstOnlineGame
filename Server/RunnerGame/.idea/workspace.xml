@@ -6,7 +6,10 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0a31a95-440c-4529-a865-2a21b6bdca9b" name="Default Changelist" comment="" />
+    <list default="true" id="b0a31a95-440c-4529-a865-2a21b6bdca9b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../client/runner/src/objects/Player.as" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/runner/src/objects/Player.as" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../client/runner/src/screens/InGame.as" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/runner/src/screens/InGame.as" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -175,12 +178,12 @@
       <workItem from="1550654352429" duration="797000" />
       <workItem from="1550657459502" duration="1401000" />
       <workItem from="1551189486639" duration="5725000" />
-      <workItem from="1551254255314" duration="2136000" />
+      <workItem from="1551254255314" duration="2735000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10059000" />
+    <option name="totallyTimeSpent" value="10658000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -195,7 +198,7 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26096824" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26096824" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -214,7 +217,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5045386" side_tool="true" visible="true" weight="0.22913256" />
-      <window_info active="true" anchor="bottom" id="Messages" order="12" sideWeight="0.49546143" visible="true" weight="0.22913256" />
+      <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.49546143" visible="true" weight="0.22913256" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Maven" order="1" weight="0.32980332" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />

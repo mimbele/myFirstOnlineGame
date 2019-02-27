@@ -1,5 +1,7 @@
 package objects
 {
+	import com.smartfoxserver.v2.entities.data.SFSObject;
+	import com.smartfoxserver.v2.requests.PublicMessageRequest;
 	import screens.InGame;
 	import starling.display.Image;
 	import starling.display.Sprite;
@@ -17,7 +19,9 @@ package objects
 		private var playerTexture_crouching:Texture;
 		
 		private var velY:Number;
+		private var startingY:Number;
 		private var _state:int;
+		private var _nextAction:Function;
 		
 		public function get state():int 
 		{
@@ -38,7 +42,7 @@ package objects
 		private const CROUCHING:int = 2;
 		
 		
-		public function Player(inGame:InGame, isMe:Boolean)
+		public function Player(inGame:InGame, isMe:Boolean, startingY:Number)
 		{
 			super();
 			this.isMe = isMe;
@@ -55,7 +59,9 @@ package objects
 			
 			state = IDLE;
 			velY = 0;
+			this.startingY = startingY;
 			playerImage = new Image(playerTexture);
+			y = startingY;
 			this.addEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
 			addEventListener("stateChange", stateChangeHandler);
 		}
@@ -64,17 +70,31 @@ package objects
 		{
 			this.removeEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
 			this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
-			inGame.stage.addEventListener("SWIPE_UP", jump);
-			inGame.stage.addEventListener("SWIPE_DOWN", crouch);
+			if (isMe)
+			{
+				inGame.stage.addEventListener("SWIPE_UP", onSwipeUp);
+				inGame.stage.addEventListener("SWIPE_DOWN", onSwipeDown);
+			}
 			
 			playerImage.x = 75;
 			
-			if (isMe){
-				playerImage.y = stage.stageHeight - playerImage.height - 10;
-			} else{
-				playerImage.y = stage.stageHeight - playerImage.height - 10 - 250;
-			}
 			this.addChild(playerImage);
+		}
+		
+		private function onSwipeDown(e:Event):void 
+		{
+			if (state == IDLE)
+				crouch(null);
+			else
+				_nextAction = crouch;
+		}
+		
+		private function onSwipeUp(e:Event):void 
+		{
+			if (state == IDLE)
+				jump(null);
+			else
+				_nextAction = jump;
 		}
 		
 		private function onEnterFrame(e:Event):void 
@@ -84,11 +104,16 @@ package objects
 			// adjust gravity
 			velY += inGame.GRAVITY * inGame.deltaTime * 150;
 			
-			if (y >= 0 && state != CROUCHING)
+			if (y >= startingY && state != CROUCHING)
 			{
-				y = 0.0;
+				y = startingY;
 				velY = 0.0;
 				state = IDLE;
+				if (_nextAction)
+				{
+					_nextAction(null);
+					_nextAction = null;
+				}
 			}
 			if (state == CROUCHING){
 				crouchDuration -= inGame.deltaTime;
@@ -99,43 +124,40 @@ package objects
 			}
 		}
 		
-		private function crouch(e:Event):void 
+		public function crouch(e:Event):void 
 		{
-			if (!isMe)
-				return;
 			if (state == IDLE)
 			{
 				crouchDuration = 0.6;
 				state = CROUCHING;
 			}
+			if (isMe)
+				NetworkManager.getInstance().sfs.send(new PublicMessageRequest("crouch", new SFSObject(), null));
 		}
 		
-		private function jump(e:Event):void 
+		public function jump(e:Event):void 
 		{
-			if (!isMe)
-				return;
 			if (state == IDLE)
 			{
 				velY = -500;
 				state = JUMPING;
 			}
+			if (isMe)
+				NetworkManager.getInstance().sfs.send(new PublicMessageRequest("jump", new SFSObject(), null));
 		}
 
 		private function stateChangeHandler(e:Event):void 
 		{
-			if (!isMe)
-				return;
 			if (state == CROUCHING){
 				playerImage.texture = playerTexture_crouching;
-				y = 30;
+				y = startingY+30;
 				
 			} else if(state == IDLE) {
 				playerImage.texture = playerTexture;
-				y = 0.0;
+				y = startingY;
 			}
 			
 			playerImage.readjustSize();
-			
 		}
 	}
 }

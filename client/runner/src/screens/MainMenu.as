@@ -38,6 +38,7 @@ package screens
 			findBtn.y = (stage.stageHeight - findBtn.height) / 2;
 			
 			findBtn.addEventListener(Event.TRIGGERED, findBtn_clickHandler);
+			NetworkManager.getInstance().FindOpponent(); // TODO: REMOVE
 		}
 
 		
