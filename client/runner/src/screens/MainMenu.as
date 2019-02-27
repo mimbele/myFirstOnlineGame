@@ -27,7 +27,7 @@ package screens
 			bgImage = new Image(Assets.getTexture("mainMenu_bg"));
 			this.addChild(bgImage);
 			
-			findBtn = new Button(Assets.getTexture("findBtn"));
+			findBtn = new Button(Assets.getTexture("findBtn"), "FIND OPPONENT");
 			this.addChild(findBtn);
 			
 			findBtn.x = (stage.stageWidth - findBtn.width) / 2;
