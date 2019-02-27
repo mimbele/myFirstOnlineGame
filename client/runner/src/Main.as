@@ -35,7 +35,7 @@ package
 			loaderInfo.removeEventListener(Event.COMPLETE, loader_eventCompleteHandler);
 			progress.ratio = 0.1;
 			
-			myStarling = new Starling(InGame, stage);
+			myStarling = new Starling(MainMenu, stage);
 			myStarling.antiAliasing = 1;
 			myStarling.addEventListener(Event.CONTEXT3D_CREATE, myStarling_contex3DCreateHandler);
 		}

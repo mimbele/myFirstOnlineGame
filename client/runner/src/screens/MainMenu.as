@@ -13,6 +13,7 @@ package screens
 		private var inGame:InGame;
 		private var findBtn:Button;
 		
+		
 		public function MainMenu()
 		{
 			super();
