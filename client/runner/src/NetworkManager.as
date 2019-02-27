@@ -46,13 +46,13 @@ package
 		{
 			if (sfs.joinedRooms.length > 0) // already in queue
 				return;
-			var rooms = sfs.roomList;
+			var rooms:Array.<Room> = sfs.roomList;
 			var joined = false;
 			for (var room:Room in rooms)
 			{
 				if (false)
 					continue;
-				sfs.send(new JoinRoomRequest(room.id, null, sfs.lastJoinedRoom, false));
+				sfs.send(new JoinRoomRequest(room, null, sfs.lastJoinedRoom.id, false));
 				joined = true;
 			}
 			if (!joined)
