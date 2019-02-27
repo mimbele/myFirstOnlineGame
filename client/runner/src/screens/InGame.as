@@ -1,5 +1,7 @@
 package screens 
 {
+	import com.smartfoxserver.v2.core.SFSEvent;
+	import com.smartfoxserver.v2.entities.User;
 	import starling.events.KeyboardEvent;
 	import objects.Player;
 	import starling.display.Button;
@@ -71,13 +73,27 @@ package screens
 			this.addChild(bgOpponent);
 			
 			trace (NetworkManager.getInstance().sfs.mySelf.playerId);
-			_player = new Player(this, (NetworkManager.getInstance().sfs.mySelf.playerId == 1));
-			opponent = new Player(this, (NetworkManager.getInstance().sfs.mySelf.playerId == 2));
+			_player = new Player(this, true, stage.height-100);
+			opponent = new Player(this, false, stage.height-350);
 			this.addChild(player);
 			this.addChild(opponent);
 			
 			this.addEventListener(Event.ENTER_FRAME, onGameTick);
 			this.addEventListener(TouchEvent.TOUCH, this_touchHandler);
+			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.PUBLIC_MESSAGE, onPublicMessage);
+		}
+		
+		private function onPublicMessage(evt:SFSEvent):void 
+		{
+			var sender:User = evt.params.sender;
+         
+			if (sender == NetworkManager.getInstance().sfs.mySelf)
+				return;
+			
+			if (evt.params["message"] == "jump")
+				opponent.jump(null);
+			else if (evt.params["message"] == "crouch")
+				opponent.crouch(null);
 		}
 		
 		protected function this_touchHandler(e:TouchEvent):void 

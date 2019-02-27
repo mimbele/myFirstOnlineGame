@@ -49,7 +49,6 @@ package
 				return;
 			if (sfs.joinedRooms.length > 0) // already in queue
 				return;
-			trace(sfs.roomList.length);
 			var rooms:Array.<Room> = sfs.roomList;
 			var joined = false;
 			for each(var room in rooms)
