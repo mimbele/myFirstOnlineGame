@@ -17,8 +17,15 @@ package
 		[Embed(source="../media/graphics/loading_bg.png")]
 		public static const loaging_bg:Class;
 		
-		//[Embed(source="../media/graphics/backButton.png")]
-		//public static const backButton:Class;
+		[Embed(source="../media/graphics/backButton.png")]
+		public static const backButton:Class;
+		
+		[Embed(source="../media/graphics/mainMenu_bg.png")]
+		public static const mainMenu_bg:Class;
+		
+		[Embed(source="../media/graphics/findBtn.png")]
+		public static const findBtn:Class;
+		
 		
 		[Embed(source="../media/graphics/player.png")]
 		public static const player:Class;
