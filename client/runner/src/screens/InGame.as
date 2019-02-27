@@ -45,6 +45,16 @@ package screens
 			_elapsed = value;
 		}
 		
+		public function get life():Number 
+		{
+			return _life;
+		}
+		
+		public function set life(value:Number):void 
+		{
+			_life = value;
+		}
+		
 		private var _player:Player;
 		private var opponent:Player;
 		
@@ -53,6 +63,7 @@ package screens
 		private var _elapsed:Number;
 		private var obstacleGap:Number;
 		private var touchHandler:TouchHandler;
+		private var _life:Number;
 		
 		public const GRAVITY:Number = 9.81;
 		public const BG_SPEED:Number = 300;
@@ -77,6 +88,7 @@ package screens
 			touchHandler = new TouchHandler(stage);
 			obstacleGap = 0;
 			elapsed = 0;
+			life = 4;
 			
 			bgPlayer = new backGround(true, BG_SPEED, this);
 			bgOpponent = new backGround(false, BG_SPEED, this);
@@ -122,7 +134,7 @@ package screens
 			timePrevious = timeCurrent;
 			timeCurrent = getTimer();
 			elapsed = (timeCurrent - timePrevious) * 0.001;
-
+			
 			createObstacle();
 		}
 		
@@ -130,9 +142,7 @@ package screens
 		{
 			if (Math.random() < 0.03 && obstacleGap > 50){
 				var obstacle:Obstacle = new Obstacle(this, OBSTACLE_SPEED);
-				
-				
-				
+								
 				obstacleGap = 0;
 			} else{
 				obstacleGap ++;

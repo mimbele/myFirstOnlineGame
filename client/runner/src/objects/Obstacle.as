@@ -46,6 +46,7 @@ package objects
 			if (this.bounds.intersects(gameRef.player.bounds))
 			{
 				gameRef.removeChild(this);
+				gameRef.life --;
 			}
 			
 			if (this.x < -50)

@@ -23,8 +23,11 @@ package
 		[Embed(source="../media/graphics/mainMenu_bg.png")]
 		public static const mainMenu_bg:Class;
 		
-		[Embed(source="../media/graphics/findBtn.png")]
-		public static const findBtn:Class;
+		[Embed(source="../media/graphics/gameOver_bg.png")]
+		public static const gameOver_bg:Class;
+		
+		[Embed(source="../media/graphics/btn.png")]
+		public static const btn:Class;
 		
 		[Embed(source="../media/graphics/player_crouch.png")]
 		public static const player_crouch:Class;

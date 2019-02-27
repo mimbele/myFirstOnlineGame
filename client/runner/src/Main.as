@@ -7,6 +7,7 @@ package
 	import flash.utils.Timer;
 	import screens.InGame;
 	import screens.MainMenu;
+	import screens.GameOver;
 	import starling.core.Starling;
 	import utils.ProgressBar;
 	import starling.animation.DelayedCall;
