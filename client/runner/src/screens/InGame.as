@@ -35,17 +35,28 @@ package screens
 			return elapsed;
 		}
 		
+		public function get elapsed():Number 
+		{
+			return _elapsed;
+		}
+		
+		public function set elapsed(value:Number):void 
+		{
+			_elapsed = value;
+		}
+		
 		private var _player:Player;
 		private var opponent:Player;
 		
 		private var timePrevious:Number;
 		private var timeCurrent:Number;
-		private var elapsed:Number;
+		private var _elapsed:Number;
 		private var obstacleGap:Number;
 		private var touchHandler:TouchHandler;
 		
 		public const GRAVITY:Number = 9.81;
 		public const BG_SPEED:Number = 300;
+		private static const OBSTACLE_SPEED:Number = 400;
 		
 		
 		public function InGame() 
@@ -118,9 +129,9 @@ package screens
 		private function createObstacle():void 
 		{
 			if (Math.random() < 0.03 && obstacleGap > 50){
-				var obstacle:Obstacle = new Obstacle(this);
-				obstacle.x = stage.stageWidth;
-				obstacle.y = stage.stageHeight - obstacle.height - 10;
+				var obstacle:Obstacle = new Obstacle(this, OBSTACLE_SPEED);
+				
+				
 				
 				obstacleGap = 0;
 			} else{

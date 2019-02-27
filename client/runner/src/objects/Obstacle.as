@@ -8,31 +8,49 @@ package objects
 	public class Obstacle extends Sprite
 	{
 		private var ObstacleImage:Image;
-		private var inGame:InGame;
+		private var gameRef:InGame;
+		private var obSpeed:Number;
+		private var isRoofObstacle:Boolean; // 30% chance of being roof obstacle
 		
-		public function Obstacle(inGame:InGame)
+		public function Obstacle(inGame:InGame, speed:Number)
 		{
 			super();
 			
-			ObstacleImage = new Image(Assets.getTexture("obstacle"));
+			gameRef = inGame;
+			obSpeed = speed;
+			
+			if (Math.random() < 0.3){
+				ObstacleImage = new Image(Assets.getTexture("roofObstacle"));
+				isRoofObstacle = true;
+				this.x = gameRef.stage.stageWidth;
+				this.y = gameRef.stage.stageHeight - this.height - 250;
+				trace(ObstacleImage.y, this.y);
+			}else{
+				ObstacleImage = new Image(Assets.getTexture("obstacle"));
+				isRoofObstacle = false;
+				this.x = gameRef.stage.stageWidth;
+				this.y = gameRef.stage.stageHeight - this.height - 60;
+			}
+			this.x = gameRef.stage.stageWidth;
+
 			this.addChild(ObstacleImage);
 			
-			this.addEventListener(Event.ENTER_FRAME, onEnterFrame);
+			this.addEventListener(Event.ENTER_FRAME, this_enterFrameHandler);
 			
-			this.inGame = inGame;
 			inGame.addChild(this);
 		}
 		
-		private function onEnterFrame(e:Event):void 
+		private function this_enterFrameHandler(e:Event):void 
 		{
-			this.x -= inGame.player.speed * inGame.deltaTime;
-			if (this.bounds.intersects(inGame.player.bounds))
+			this.x -= obSpeed * gameRef.elapsed;
+			if (this.bounds.intersects(gameRef.player.bounds))
 			{
-				inGame.removeChild(this);
+				gameRef.removeChild(this);
 			}
+			
 			if (this.x < -50)
 			{
-				inGame.removeChild(this);	
+				gameRef.removeChild(this);	
 			}
 		}
 	}
