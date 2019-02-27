@@ -9,9 +9,8 @@ package objects
 	{
 		private var ObstacleImage:Image;
 		private var inGame:InGame;
-		private var obSpeed:Number;
 		
-		public function Obstacle(inGame:InGame, speed:Number)
+		public function Obstacle(inGame:InGame)
 		{
 			super();
 			
@@ -22,12 +21,11 @@ package objects
 			
 			this.inGame = inGame;
 			inGame.addChild(this);
-			obSpeed = speed;
 		}
 		
 		private function onEnterFrame(e:Event):void 
 		{
-			this.x -= obSpeed * inGame.deltaTime;
+			this.x -= inGame.player.speed * inGame.deltaTime;
 			if (this.bounds.intersects(inGame.player.bounds))
 			{
 				inGame.removeChild(this);

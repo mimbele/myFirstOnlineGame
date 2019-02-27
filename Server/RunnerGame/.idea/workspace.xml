@@ -6,13 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0a31a95-440c-4529-a865-2a21b6bdca9b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/runnergame/RoomExtension.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/runnergame/RoomExtension.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/runnergame/UserJoinHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/runnergame/UserJoinHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/runner/src/NetworkManager.as" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/runner/src/NetworkManager.as" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/runner/src/screens/MainMenu.as" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/runner/src/screens/MainMenu.as" afterDir="false" />
-    </list>
+    <list default="true" id="b0a31a95-440c-4529-a865-2a21b6bdca9b" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -181,12 +175,12 @@
       <workItem from="1550654352429" duration="797000" />
       <workItem from="1550657459502" duration="1401000" />
       <workItem from="1551189486639" duration="5725000" />
-      <workItem from="1551254255314" duration="1533000" />
+      <workItem from="1551254255314" duration="2136000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9456000" />
+    <option name="totallyTimeSpent" value="10059000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -219,8 +213,8 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" />
-      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50378215" side_tool="true" visible="true" weight="0.22913256" />
-      <window_info active="true" anchor="bottom" id="Messages" order="12" sideWeight="0.49621785" visible="true" weight="0.22913256" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5045386" side_tool="true" visible="true" weight="0.22913256" />
+      <window_info active="true" anchor="bottom" id="Messages" order="12" sideWeight="0.49546143" visible="true" weight="0.22913256" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Maven" order="1" weight="0.32980332" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />

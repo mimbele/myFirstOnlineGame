@@ -34,29 +34,29 @@ package
 			
 			if (dragging)
 			{
-				var diffx = touch.globalX - touch.previousGlobalX;
-				var diffy = touch.globalY - touch.previousGlobalY;
-				if (Math.abs(diffy) < 5)
+				var diffx = touch.globalX - touchStart.x;
+				var diffy = touch.globalY - touchStart.y;
+				if (Math.abs(diffy) < 15)
 				{
-					if (diffx > 10)
+					if (diffx > 20)
 					{
 						stage.dispatchEventWith("SWIPE_RIGHT");
 						dragging = false;
 					}
-					else if (diffx < -10)
+					else if (diffx < -20)
 					{
 						stage.dispatchEventWith("SWIPE_LEFT");
 						dragging = false;
 					}
 				}
-				else if (Math.abs(diffx) < 5)
+				else if (Math.abs(diffx) < 15)
 				{
-					if (diffy > 10)
+					if (diffy > 20)
 					{
 						stage.dispatchEventWith("SWIPE_DOWN");
 						dragging = false;
 					}
-					else if (diffy < -10)
+					else if (diffy < -20)
 					{
 						stage.dispatchEventWith("SWIPE_UP");
 						dragging = false;

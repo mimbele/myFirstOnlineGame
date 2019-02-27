@@ -33,19 +33,6 @@ package screens
 			return elapsed;
 		}
 		
-		public function get state():int 
-		{
-			return _state;
-		}
-		
-		public function set state(value:int):void 
-		{
-			if (_state == value)
-				return;
-			_state = value;
-			dispatchEventWith("stateChange");
-		}
-		
 		private var _player:Player;
 		private var opponent:Player;
 		
@@ -55,18 +42,8 @@ package screens
 		private var obstacleGap:Number;
 		private var touchHandler:TouchHandler;
 		
-		private var velY:Number;
-		private var _state:int; //0,1,2
-		private var crouchDuration:Number;
-		
-		private static const GRAVITY:Number = 9.81;
-		private static const BG_SPEED:Number = 400;
-		private static const OBSTACLE_SPEED:Number = 400;
-		
-		private static const IDLE:int = 0;
-		private static const JUMPING:int = 1;
-		private static const CROUCHING:int = 2;
-		
+		public const GRAVITY:Number = 9.81;
+		public const BG_SPEED:Number = 300;
 		
 		
 		public function InGame() 
@@ -85,9 +62,7 @@ package screens
 		{
 			timeCurrent = getTimer();
 			touchHandler = new TouchHandler(stage);
-			velY = 0;
 			obstacleGap = 0;
-			state = IDLE;
 			elapsed = 0;
 			
 			bgPlayer = new backGround(true, BG_SPEED, this);
@@ -95,8 +70,9 @@ package screens
 			this.addChild(bgPlayer);
 			this.addChild(bgOpponent);
 			
-			_player = new Player(this, true);
-			opponent = new Player(this, false);
+			trace (NetworkManager.getInstance().sfs.mySelf.playerId);
+			_player = new Player(this, (NetworkManager.getInstance().sfs.mySelf.playerId == 1));
+			opponent = new Player(this, (NetworkManager.getInstance().sfs.mySelf.playerId == 2));
 			this.addChild(player);
 			this.addChild(opponent);
 			
@@ -110,29 +86,8 @@ package screens
 			if(touch)
             {
                 touchHandler.Update(touch);
-				stage.addEventListener("SWIPE_UP", jump);
-				stage.addEventListener("SWIPE_DOWN", crouch);
             }
 		}
-		
-		private function crouch(e:Event):void 
-		{
-			if (state == IDLE)
-			{
-				crouchDuration = 0.6;
-				state = CROUCHING;
-			}
-		}
-		
-		private function jump(e:Event):void 
-		{
-			if (state == IDLE)
-			{
-				velY = -500;
-				state = JUMPING;
-			}
-		}
-		
 		
 		
 		private function onGameTick(event:Event):void
@@ -141,34 +96,15 @@ package screens
 			timeCurrent = getTimer();
 			elapsed = (timeCurrent - timePrevious) * 0.001;
 
-			// adjust velocity
-			player.y += velY * elapsed;
-			// adjust gravity
-			velY += GRAVITY * elapsed * 150;
-			
-			if (player.y >= 0 && state!=CROUCHING)
-			{
-				player.y = 0.0;
-				velY = 0.0;
-				state = IDLE;
-			}
-			if (state == CROUCHING){
-				crouchDuration -= elapsed;
-				velY = 0.0;
-				if (crouchDuration <= 0){
-					state = IDLE;
-				}
-			}
 			createObstacle();
 		}
 		
 		private function createObstacle():void 
 		{
 			if (Math.random() < 0.03 && obstacleGap > 50){
-				var obstacle:Obstacle = new Obstacle(this, OBSTACLE_SPEED);
+				var obstacle:Obstacle = new Obstacle(this);
 				obstacle.x = stage.stageWidth;
 				obstacle.y = stage.stageHeight - obstacle.height - 10;
-				
 				
 				obstacleGap = 0;
 			} else{
