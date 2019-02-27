@@ -36,27 +36,27 @@ package
 			{
 				var diffx = touch.globalX - touch.previousGlobalX;
 				var diffy = touch.globalY - touch.previousGlobalY;
-				if (Math.abs(diffy) < 10)
+				if (Math.abs(diffy) < 5)
 				{
-					if (diffx > 20)
+					if (diffx > 10)
 					{
 						stage.dispatchEventWith("SWIPE_RIGHT");
 						dragging = false;
 					}
-					else if (diffx < -20)
+					else if (diffx < -10)
 					{
 						stage.dispatchEventWith("SWIPE_LEFT");
 						dragging = false;
 					}
 				}
-				else if (Math.abs(diffx) < 10)
+				else if (Math.abs(diffx) < 5)
 				{
-					if (diffy > 20)
+					if (diffy > 10)
 					{
 						stage.dispatchEventWith("SWIPE_DOWN");
 						dragging = false;
 					}
-					else if (diffy < -20)
+					else if (diffy < -10)
 					{
 						stage.dispatchEventWith("SWIPE_UP");
 						dragging = false;

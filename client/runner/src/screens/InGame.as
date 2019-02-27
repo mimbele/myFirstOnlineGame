@@ -19,6 +19,7 @@ package screens
 	 * ...
 	 * @author mimbele
 	 */
+	[Event(name = "stateChange", type = "starling.events.Event")]
 	public class InGame extends Sprite
 	{
 		private var bgPlayer:backGround;
@@ -32,6 +33,19 @@ package screens
 			return elapsed;
 		}
 		
+		public function get state():int 
+		{
+			return _state;
+		}
+		
+		public function set state(value:int):void 
+		{
+			if (_state == value)
+				return;
+			_state = value;
+			dispatchEventWith("stateChange");
+		}
+		
 		private var _player:Player;
 		private var opponent:Player;
 		
@@ -42,7 +56,8 @@ package screens
 		private var touchHandler:TouchHandler;
 		
 		private var velY:Number;
-		private var state:int;
+		private var _state:int; //0,1,2
+		private var crouchDuration:Number;
 		
 		private static const GRAVITY:Number = 9.81;
 		private static const BG_SPEED:Number = 400;
@@ -80,8 +95,8 @@ package screens
 			this.addChild(bgPlayer);
 			this.addChild(bgOpponent);
 			
-			_player = new Player(true);
-			opponent = new Player(false);
+			_player = new Player(this, true);
+			opponent = new Player(this, false);
 			this.addChild(player);
 			this.addChild(opponent);
 			
@@ -96,7 +111,17 @@ package screens
             {
                 touchHandler.Update(touch);
 				stage.addEventListener("SWIPE_UP", jump);
+				stage.addEventListener("SWIPE_DOWN", crouch);
             }
+		}
+		
+		private function crouch(e:Event):void 
+		{
+			if (state == IDLE)
+			{
+				crouchDuration = 0.6;
+				state = CROUCHING;
+			}
 		}
 		
 		private function jump(e:Event):void 
@@ -121,11 +146,18 @@ package screens
 			// adjust gravity
 			velY += GRAVITY * elapsed * 150;
 			
-			if (player.y >= 0)
+			if (player.y >= 0 && state!=CROUCHING)
 			{
 				player.y = 0.0;
 				velY = 0.0;
 				state = IDLE;
+			}
+			if (state == CROUCHING){
+				crouchDuration -= elapsed;
+				velY = 0.0;
+				if (crouchDuration <= 0){
+					state = IDLE;
+				}
 			}
 			createObstacle();
 		}

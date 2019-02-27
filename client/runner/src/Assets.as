@@ -26,12 +26,17 @@ package
 		[Embed(source="../media/graphics/findBtn.png")]
 		public static const findBtn:Class;
 		
+		[Embed(source="../media/graphics/player_crouch.png")]
+		public static const player_crouch:Class;
 		
-		[Embed(source="../media/graphics/player.png")]
-		public static const player:Class;
+		[Embed(source="../media/graphics/opponent_crouch.png")]
+		public static const opponent_crouch:Class;
 		
 		[Embed(source="../media/graphics/opponent.png")]
 		public static const opponent:Class;
+		
+		[Embed(source="../media/graphics/player.png")]
+		public static const player:Class;
 		
 		[Embed(source="../media/graphics/obstacle.png")]
 		public static const obstacle:Class;
