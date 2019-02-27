@@ -13,6 +13,7 @@ package screens
 	import flash.utils.getTimer;
 
 	import Assets;
+	import TouchHandler;
 	import objects.Obstacle;
 	/**
 	 * ...
@@ -38,6 +39,7 @@ package screens
 		private var timeCurrent:Number;
 		private var elapsed:Number;
 		private var obstacleGap:Number;
+		private var touchHandler:TouchHandler;
 		
 		private var velY:Number;
 		private var state:int;
@@ -67,6 +69,7 @@ package screens
 		private function drawGame():void
 		{
 			timeCurrent = getTimer();
+			touchHandler = new TouchHandler(stage);
 			velY = 0;
 			obstacleGap = 0;
 			state = IDLE;
@@ -91,12 +94,18 @@ package screens
 			var touch:Touch = e.getTouch(stage);
 			if(touch)
             {
-                if(touch.phase == TouchPhase.BEGAN && state == IDLE)
-                {
-					state = JUMPING;
-					velY = -500;
-				}
+                touchHandler.Update(touch);
+				stage.addEventListener("SWIPE_UP", jump);
             }
+		}
+		
+		private function jump(e:Event):void 
+		{
+			if (state == IDLE)
+			{
+				velY = -500;
+				state = JUMPING;
+			}
 		}
 		
 		

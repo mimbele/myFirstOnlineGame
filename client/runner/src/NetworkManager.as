@@ -65,7 +65,6 @@ package
 				
 				// Create new game room with above parameters and join it
 				sfs.send(new CreateRoomRequest(roomSettings, true, sfs.lastJoinedRoom));
-				in_queue = true;
 			}
 		}
 		public function CancelFind()
@@ -78,6 +77,7 @@ package
 		{
 			if (evt.params.success)
 				sfs.send(new LoginRequest(username, password, "BasicExamples", new SFSObject()));
+			sfs.removeEventListener(SFSEvent.CONNECTION, onConnection);
 		}
 		
 		public static function getInstance():NetworkManager
