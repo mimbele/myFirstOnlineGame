@@ -46,18 +46,35 @@ package screens
 			dispatchEventWith("stateChange");
 		}
 		
+		public function get life():Number 
+		{
+			return _life;
+		}
+		
+		public function set life(value:Number):void 
+		{
+			_life = value;
+		}
+		
 		private var _player:Player;
 		private var opponent:Player;
 		
 		private var timePrevious:Number;
 		private var timeCurrent:Number;
-		private var elapsed:Number;
+		
+		public function get elapsed():Number 
+		{
+			return _elapsed;
+		}
+		
+		private var _elapsed:Number;
 		private var obstacleGap:Number;
 		private var touchHandler:TouchHandler;
 		
 		private var velY:Number;
 		private var _state:int; //0,1,2
 		private var crouchDuration:Number;
+		private var _life:Number;
 		
 		private static const GRAVITY:Number = 9.81;
 		private static const BG_SPEED:Number = 400;
@@ -88,7 +105,8 @@ package screens
 			velY = 0;
 			obstacleGap = 0;
 			state = IDLE;
-			elapsed = 0;
+			_elapsed = 0;
+			life = 4;
 			
 			bgPlayer = new backGround(true, BG_SPEED, this);
 			bgOpponent = new backGround(false, BG_SPEED, this);
@@ -139,7 +157,7 @@ package screens
 		{
 			timePrevious = timeCurrent;
 			timeCurrent = getTimer();
-			elapsed = (timeCurrent - timePrevious) * 0.001;
+			_elapsed = (timeCurrent - timePrevious) * 0.001;
 
 			// adjust velocity
 			player.y += velY * elapsed;
@@ -166,8 +184,7 @@ package screens
 		{
 			if (Math.random() < 0.03 && obstacleGap > 50){
 				var obstacle:Obstacle = new Obstacle(this, OBSTACLE_SPEED);
-				obstacle.x = stage.stageWidth;
-				obstacle.y = stage.stageHeight - obstacle.height - 10;
+				
 				
 				
 				obstacleGap = 0;
