@@ -4,6 +4,7 @@ package
 	import com.smartfoxserver.v2.core.SFSEvent;
 	import com.smartfoxserver.v2.entities.Room;
 	import com.smartfoxserver.v2.requests.LeaveRoomRequest;
+	import com.smartfoxserver.v2.requests.RoomExtension;
 	import com.smartfoxserver.v2.requests.RoomSettings;
 	import com.smartfoxserver.v2.requests.CreateRoomRequest;
 	import com.smartfoxserver.v2.entities.data.SFSObject;
@@ -17,7 +18,7 @@ package
 	public class NetworkManager
 	{
 		public var sfs:SmartFox;
-		public static var in_queue:Boolean = false;
+		public var in_queue:Boolean = false;
 		private static var ins:NetworkManager = null;
 		
 		private var username:String = "";
@@ -44,16 +45,20 @@ package
 		
 		public function FindOpponent()
 		{
+			if (!sfs.isConnected)
+				return;
 			if (sfs.joinedRooms.length > 0) // already in queue
 				return;
+			trace(sfs.roomList.length);
 			var rooms:Array.<Room> = sfs.roomList;
 			var joined = false;
-			for (var room:Room in rooms)
+			for each(var room in rooms)
 			{
 				if (false)
 					continue;
-				sfs.send(new JoinRoomRequest(room, null, sfs.lastJoinedRoom.id, false));
+				sfs.send(new JoinRoomRequest(room, null, sfs.lastJoinedRoom ? sfs.lastJoinedRoom.id : null, false));
 				joined = true;
+				break;
 			}
 			if (!joined)
 			{
@@ -61,6 +66,7 @@ package
 				var roomSettings:RoomSettings = new RoomSettings(sfs.mySelf.name);
 				roomSettings.maxUsers = 2;
 				roomSettings.maxSpectators = 0;
+				roomSettings.extension = new RoomExtension("Runner", "com.runnergame.RoomExtension");
 				roomSettings.isGame = true;
 				
 				// Create new game room with above parameters and join it
@@ -76,8 +82,16 @@ package
 		function onConnection(evt:SFSEvent):void
 		{
 			if (evt.params.success)
+			{
 				sfs.send(new LoginRequest(username, password, "BasicExamples", new SFSObject()));
+				sfs.addEventListener(SFSEvent.ROOM_JOIN, onRoomJoin);
+			}
 			sfs.removeEventListener(SFSEvent.CONNECTION, onConnection);
+		}
+		
+		function onRoomJoin(evt:SFSEvent)
+		{
+			in_queue = true;
 		}
 		
 		public static function getInstance():NetworkManager

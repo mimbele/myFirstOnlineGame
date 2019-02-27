@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?> 
 <application xmlns="http://ns.adobe.com/air/application/28.0">
 	
-	<id>air.runner</id>
+	<id>air.runner2</id>
 	<versionNumber>0.1</versionNumber>
 	<supportedProfiles>mobileDevice</supportedProfiles>
 	<filename>runner</filename>
@@ -46,7 +46,7 @@
     </iPhone> 
 	
 	<initialWindow>
-		<title>debug</title>
+		<title>runner</title>
 		<content>runner.swf</content>
 		<visible>true</visible>
 		<fullScreen>true</fullScreen>
