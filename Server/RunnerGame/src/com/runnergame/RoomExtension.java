@@ -26,6 +26,10 @@ public class RoomExtension extends  SFSExtension
         GameStarted = true;
         spawner = getApi().getSystemScheduler().scheduleAtFixedRate(new SpawnObstacles(), 0, 100, TimeUnit.MILLISECONDS);
     }
+    public void destroy()
+    {
+        spawner.cancel(true);
+    }
     class SpawnObstacles implements Runnable
     {
     
@@ -39,6 +43,14 @@ public class RoomExtension extends  SFSExtension
                 params.putFloat("speed", 400);
                 params.putBool("isroof", Math.random() < 0.5f);
                 params.putInt("user", (int)(Math.random()*2)+1);
+                params.putLong("time", System.currentTimeMillis());
+                try
+                {
+                    Thread.sleep(200);
+                } catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
                 send("spawn_obstacle", params, getParentRoom().getPlayersList());
             }
             ticks++;

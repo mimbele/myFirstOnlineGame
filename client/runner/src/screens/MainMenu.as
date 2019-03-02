@@ -53,8 +53,8 @@ package screens
 			{
 				parent.addChild(new InGame());
 				removeFromParent(false);
+				NetworkManager.getInstance().sfs.removeEventListener(SFSEvent.EXTENSION_RESPONSE, onResponse);
 			}
-			NetworkManager.getInstance().sfs.removeEventListener(SFSEvent.EXTENSION_RESPONSE, onResponse);
 		}
 		private function findBtn_clickHandler(e:Event):void 
 		{

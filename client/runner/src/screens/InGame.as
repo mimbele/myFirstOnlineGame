@@ -92,15 +92,33 @@ package screens
 			
 			if (cmd == "spawn_obstacle")
 			{
-				trace("SPAWNING");
 				var x = params.getFloat("x");
 				var user = params.getInt("user");
 				var speed = params.getFloat("speed");
 				var isroof = params.getBool("isroof");
-				
-				var y = stage.stageHeight - 60;
-				y -= user == NetworkManager.getInstance().sfs.mySelf.playerId ? 40 : 280;
-				var obstacle:Obstacle = new Obstacle(this, isroof, speed, stage.width+x, y);
+				var time = params.getLong("time");
+				trace("SPAWNING " + user + " " + isroof);
+				var isMine = user == NetworkManager.getInstance().sfs.mySelf.playerId;
+				var y;
+				if (isMine)
+				{
+					if (isroof)
+						y = stage.height - 250;
+					else
+						y = stage.height - 60;
+				}
+				else
+				{
+					if (isroof)
+						y = 50;
+					else
+						y = 250;
+				}
+				y = stage.height - 170;
+				var now:Number = NetworkManager.getNow();
+				trace (now);
+				trace (time - NetworkManager.getInstance().ServerTimeDiff);
+				var obstacle:Obstacle = new Obstacle(this, isroof, speed, stage.width+x, y, time - NetworkManager.getInstance().ServerTimeDiff);
 			}
 		}
 		
