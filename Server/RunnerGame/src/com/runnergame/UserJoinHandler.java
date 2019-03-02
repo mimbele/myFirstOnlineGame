@@ -6,6 +6,8 @@ import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.exceptions.SFSException;
 import com.smartfoxserver.v2.extensions.BaseServerEventHandler;
 
+import java.util.concurrent.TimeUnit;
+
 public class UserJoinHandler extends BaseServerEventHandler
 {
     
@@ -17,7 +19,7 @@ public class UserJoinHandler extends BaseServerEventHandler
         if (room.getPlayersList().size() == 2)
         {
             send("start_game", new SFSObject(), room.getPlayersList());
-            roomExt.GameStarted = true;
+            roomExt.StartGame();
         }
     }
 }

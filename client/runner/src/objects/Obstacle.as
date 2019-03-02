@@ -10,28 +10,23 @@ package objects
 		private var ObstacleImage:Image;
 		private var gameRef:InGame;
 		private var obSpeed:Number;
-		private var isRoofObstacle:Boolean; // 30% chance of being roof obstacle
 		
-		public function Obstacle(inGame:InGame, speed:Number)
+		public function Obstacle(inGame:InGame, isRoof:Boolean, speed:Number, x, y)
 		{
 			super();
 			
 			gameRef = inGame;
 			obSpeed = speed;
+			this.x = x;
+			this.y = y;
 			
-			if (Math.random() < 0.3){
+			if (isRoof){
 				ObstacleImage = new Image(Assets.getTexture("roofObstacle"));
-				isRoofObstacle = true;
-				this.x = gameRef.stage.stageWidth;
-				this.y = gameRef.stage.stageHeight - this.height - 250;
-				trace(ObstacleImage.y, this.y);
+				this.y -= 190;
 			}else{
 				ObstacleImage = new Image(Assets.getTexture("obstacle"));
-				isRoofObstacle = false;
-				this.x = gameRef.stage.stageWidth;
-				this.y = gameRef.stage.stageHeight - this.height - 60;
+				this.y += 100;
 			}
-			this.x = gameRef.stage.stageWidth;
 
 			this.addChild(ObstacleImage);
 			
@@ -42,7 +37,7 @@ package objects
 		
 		private function this_enterFrameHandler(e:Event):void 
 		{
-			this.x -= obSpeed * gameRef.elapsed;
+			this.x -= obSpeed * gameRef.deltaTime;
 			if (this.bounds.intersects(gameRef.player.bounds))
 			{
 				gameRef.removeChild(this);

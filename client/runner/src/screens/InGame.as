@@ -2,6 +2,7 @@ package screens
 {
 	import com.smartfoxserver.v2.core.SFSEvent;
 	import com.smartfoxserver.v2.entities.User;
+	import com.smartfoxserver.v2.entities.data.SFSObject;
 	import starling.events.KeyboardEvent;
 	import objects.Player;
 	import starling.display.Button;
@@ -34,23 +35,12 @@ package screens
 		public function get deltaTime():Number{
 			return elapsed;
 		}
-		
-		public function get elapsed():Number 
-		{
-			return _elapsed;
-		}
-		
-		public function set elapsed(value:Number):void 
-		{
-			_elapsed = value;
-		}
-		
 		private var _player:Player;
 		private var opponent:Player;
 		
 		private var timePrevious:Number;
 		private var timeCurrent:Number;
-		private var _elapsed:Number;
+		private var elapsed:Number;
 		private var obstacleGap:Number;
 		private var touchHandler:TouchHandler;
 		
@@ -92,6 +82,26 @@ package screens
 			this.addEventListener(Event.ENTER_FRAME, onGameTick);
 			this.addEventListener(TouchEvent.TOUCH, this_touchHandler);
 			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.PUBLIC_MESSAGE, onPublicMessage);
+			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.EXTENSION_RESPONSE, onResponse);
+		}
+		
+		private function onResponse(evt:SFSEvent):void 
+		{
+			var cmd:String = evt.params["cmd"] as String;
+			var params:SFSObject = evt.params["params"] as SFSObject;
+			
+			if (cmd == "spawn_obstacle")
+			{
+				trace("SPAWNING");
+				var x = params.getFloat("x");
+				var user = params.getInt("user");
+				var speed = params.getFloat("speed");
+				var isroof = params.getBool("isroof");
+				
+				var y = stage.stageHeight - 60;
+				y -= user == NetworkManager.getInstance().sfs.mySelf.playerId ? 40 : 280;
+				var obstacle:Obstacle = new Obstacle(this, isroof, speed, stage.width+x, y);
+			}
 		}
 		
 		private function onPublicMessage(evt:SFSEvent):void 
@@ -122,21 +132,6 @@ package screens
 			timePrevious = timeCurrent;
 			timeCurrent = getTimer();
 			elapsed = (timeCurrent - timePrevious) * 0.001;
-
-			createObstacle();
-		}
-		
-		private function createObstacle():void 
-		{
-			if (Math.random() < 0.03 && obstacleGap > 50){
-				var obstacle:Obstacle = new Obstacle(this, OBSTACLE_SPEED);
-				
-				
-				
-				obstacleGap = 0;
-			} else{
-				obstacleGap ++;
-			}
 		}
 		
 	}
