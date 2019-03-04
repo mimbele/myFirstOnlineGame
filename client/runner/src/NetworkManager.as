@@ -100,7 +100,7 @@ package
 				ins = new NetworkManager();
 			return ins;
 		}
-		public static function getNow():Number:
+		public static function getNow():Number
 		{
 			return (new Date()).time;
 		}

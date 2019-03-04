@@ -35,6 +35,16 @@ package screens
 		public function get deltaTime():Number{
 			return elapsed;
 		}
+		
+		public function get life():Number 
+		{
+			return _life;
+		}
+		
+		public function set life(value:Number):void 
+		{
+			_life = value;
+		}
 		private var _player:Player;
 		private var opponent:Player;
 		
@@ -43,6 +53,7 @@ package screens
 		private var elapsed:Number;
 		private var obstacleGap:Number;
 		private var touchHandler:TouchHandler;
+		private var _life:Number;
 		
 		public const GRAVITY:Number = 9.81;
 		public const BG_SPEED:Number = 300;
@@ -67,6 +78,7 @@ package screens
 			touchHandler = new TouchHandler(stage);
 			obstacleGap = 0;
 			elapsed = 0;
+			life = 4;
 			
 			bgPlayer = new backGround(true, BG_SPEED, this);
 			bgOpponent = new backGround(false, BG_SPEED, this);
