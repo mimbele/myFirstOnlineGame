@@ -2,6 +2,7 @@ package screens
 {
 	import com.smartfoxserver.v2.core.SFSEvent;
 	import com.smartfoxserver.v2.entities.User;
+	import com.smartfoxserver.v2.entities.data.SFSObject;
 	import starling.events.KeyboardEvent;
 	import objects.Player;
 	import starling.display.Button;
@@ -34,36 +35,14 @@ package screens
 		public function get deltaTime():Number{
 			return elapsed;
 		}
-		
-		public function get elapsed():Number 
-		{
-			return _elapsed;
-		}
-		
-		public function set elapsed(value:Number):void 
-		{
-			_elapsed = value;
-		}
-		
-		public function get life():Number 
-		{
-			return _life;
-		}
-		
-		public function set life(value:Number):void 
-		{
-			_life = value;
-		}
-		
 		private var _player:Player;
 		private var opponent:Player;
 		
 		private var timePrevious:Number;
 		private var timeCurrent:Number;
-		private var _elapsed:Number;
+		private var elapsed:Number;
 		private var obstacleGap:Number;
 		private var touchHandler:TouchHandler;
-		private var _life:Number;
 		
 		public const GRAVITY:Number = 9.81;
 		public const BG_SPEED:Number = 300;
@@ -88,7 +67,6 @@ package screens
 			touchHandler = new TouchHandler(stage);
 			obstacleGap = 0;
 			elapsed = 0;
-			life = 4;
 			
 			bgPlayer = new backGround(true, BG_SPEED, this);
 			bgOpponent = new backGround(false, BG_SPEED, this);
@@ -104,6 +82,44 @@ package screens
 			this.addEventListener(Event.ENTER_FRAME, onGameTick);
 			this.addEventListener(TouchEvent.TOUCH, this_touchHandler);
 			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.PUBLIC_MESSAGE, onPublicMessage);
+			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.EXTENSION_RESPONSE, onResponse);
+		}
+		
+		private function onResponse(evt:SFSEvent):void 
+		{
+			var cmd:String = evt.params["cmd"] as String;
+			var params:SFSObject = evt.params["params"] as SFSObject;
+			
+			if (cmd == "spawn_obstacle")
+			{
+				var x = params.getFloat("x");
+				var user = params.getInt("user");
+				var speed = params.getFloat("speed");
+				var isroof = params.getBool("isroof");
+				var time = params.getLong("time");
+				trace("SPAWNING " + user + " " + isroof);
+				var isMine = user == NetworkManager.getInstance().sfs.mySelf.playerId;
+				var y;
+				if (isMine)
+				{
+					if (isroof)
+						y = stage.height - 250;
+					else
+						y = stage.height - 60;
+				}
+				else
+				{
+					if (isroof)
+						y = 50;
+					else
+						y = 250;
+				}
+				y = stage.height - 170;
+				var now:Number = NetworkManager.getNow();
+				trace (now);
+				trace (time - NetworkManager.getInstance().ServerTimeDiff);
+				var obstacle:Obstacle = new Obstacle(this, isroof, speed, stage.width+x, y, time - NetworkManager.getInstance().ServerTimeDiff);
+			}
 		}
 		
 		private function onPublicMessage(evt:SFSEvent):void 
@@ -134,19 +150,6 @@ package screens
 			timePrevious = timeCurrent;
 			timeCurrent = getTimer();
 			elapsed = (timeCurrent - timePrevious) * 0.001;
-			
-			createObstacle();
-		}
-		
-		private function createObstacle():void 
-		{
-			if (Math.random() < 0.03 && obstacleGap > 50){
-				var obstacle:Obstacle = new Obstacle(this, OBSTACLE_SPEED);
-								
-				obstacleGap = 0;
-			} else{
-				obstacleGap ++;
-			}
 		}
 		
 	}
