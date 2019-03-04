@@ -19,6 +19,7 @@ package
 	{
 		public var sfs:SmartFox;
 		public var in_queue:Boolean = false;
+		public var ServerTimeDiff:Number;
 		private static var ins:NetworkManager = null;
 		
 		private var username:String = "";
@@ -28,8 +29,6 @@ package
 		{
 			if (ins != null)
 				throw new Error("Use .getInstance() instead");
-			sfs = new SmartFox(false);
-			sfs.addEventListener(SFSEvent.CONNECTION, onConnection);
 		}
 		
 		public function SetLoginInfo(username:String, password:String):void
@@ -40,7 +39,9 @@ package
 		
 		public function Connect(host:String, port:int):void
 		{
+			sfs = new SmartFox(false);
 			sfs.connect(host, port);
+			sfs.addEventListener(SFSEvent.CONNECTION, onConnection);
 		}
 		
 		public function FindOpponent()
@@ -80,12 +81,12 @@ package
 		
 		function onConnection(evt:SFSEvent):void
 		{
+			sfs.removeEventListener(SFSEvent.CONNECTION, onConnection);
 			if (evt.params.success)
 			{
 				sfs.send(new LoginRequest(username, password, "BasicExamples", new SFSObject()));
 				sfs.addEventListener(SFSEvent.ROOM_JOIN, onRoomJoin);
 			}
-			sfs.removeEventListener(SFSEvent.CONNECTION, onConnection);
 		}
 		
 		function onRoomJoin(evt:SFSEvent)
@@ -98,6 +99,10 @@ package
 			if (ins == null)
 				ins = new NetworkManager();
 			return ins;
+		}
+		public static function getNow():Number:
+		{
+			return (new Date()).time;
 		}
 	}
 

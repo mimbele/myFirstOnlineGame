@@ -10,5 +10,6 @@ public class ZoneExtension extends SFSExtension
     public void init()
     {
         addEventHandler(SFSEventType.USER_LOGIN, LoginEventHandler.class);
+        addRequestHandler("ping", PingHandler.class);
     }
 }

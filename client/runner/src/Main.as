@@ -1,6 +1,8 @@
 package
 {
 	import com.smartfoxserver.v2.core.SFSEvent;
+	import com.smartfoxserver.v2.entities.data.SFSObject;
+	import com.smartfoxserver.v2.requests.ExtensionRequest;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.events.Event;
@@ -12,6 +14,7 @@ package
 	import utils.ProgressBar;
 	import starling.animation.DelayedCall;
 	import flash.events.TimerEvent;
+	import flash.utils.getTimer;
 	
 	[SWF(frameRate="60",width="940", height="540", backgroundColor="0x333333")]
 	public class Main extends Sprite
@@ -35,7 +38,7 @@ package
 		{
 			loaderInfo.removeEventListener(Event.COMPLETE, loader_eventCompleteHandler);
 			progress.ratio = 0.1;
-			
+
 			myStarling = new Starling(MainMenu, stage);
 			myStarling.antiAliasing = 1;
 			myStarling.addEventListener(Event.CONTEXT3D_CREATE, myStarling_contex3DCreateHandler);
@@ -45,7 +48,6 @@ package
 		{
 			myStarling.removeEventListener(Event.CONTEXT3D_CREATE, myStarling_contex3DCreateHandler);
 			progress.ratio = 0.5;
-			
 			connect();
 		}
 		
@@ -53,19 +55,42 @@ package
 		
 		private function connect():void
 		{
-			NetworkManager.getInstance().Connect("192.168.14.200", 9933);
-			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.CONNECTION, function (e):void{progress.ratio = 0.75; });
+			NetworkManager.getInstance().Connect("127.0.0.1", 9933);
+			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.CONNECTION, function (e):void{
+				if (e.params.success) 
+					progress.ratio = 0.75;
+				else
+					connect();
+			});
 			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.LOGIN, onLogin);
 		}
 		
 		private function onLogin(e:SFSEvent):void 
+		{	
+			CalculatePing();
+			NetworkManager.getInstance().sfs.removeEventListener(SFSEvent.LOGIN, onLogin);
+		}
+		
+		
+		private var sentTime:Number;
+		private function CalculatePing():void 
 		{
+			var now:Number = NetworkManager.getNow();
+			sentTime = now;
+			NetworkManager.getInstance().sfs.send(new ExtensionRequest("ping", new SFSObject(), null));
+			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.EXTENSION_RESPONSE, onPing);
+		}
+		
+		function onPing(e)
+		{
+			var now:Number = NetworkManager.getNow();
+			var params:SFSObject = e.params["params"] as SFSObject;
+			NetworkManager.getInstance().ServerTimeDiff = params.getLong("time") + (now - sentTime)/2 - now;
+			NetworkManager.getInstance().sfs.removeEventListener(SFSEvent.EXTENSION_RESPONSE, onPing);
 			progress.ratio = 1;
 			var timer:Timer = new Timer(1, 1);
-			timer.addEventListener(TimerEvent.TIMER_COMPLETE, function (e):void {myStarling.start(); stage.removeChild(progress); });
+			timer.addEventListener(TimerEvent.TIMER_COMPLETE, function (e):void {stage.removeChild(progress); myStarling.start(); });
 			timer.start();
-			
-			NetworkManager.getInstance().sfs.removeEventListener(SFSEvent.LOGIN, onLogin);
 		}
 	}
 }
