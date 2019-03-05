@@ -59,29 +59,6 @@ package screens
 		private var obstacleGap:Number;
 		private var touchHandler:TouchHandler;
 		
-		public function get opponentLife():Number 
-		{
-			return _opponentLife;
-		}
-		
-		public function set opponentLife(value:Number):void 
-		{
-			_opponentLife = value;
-		}
-		
-		public function get yourLife():Number 
-		{
-			return _yourLife;
-		}
-		
-		public function set yourLife(value:Number):void 
-		{
-			_yourLife = value;
-		}
-		
-		private var _opponentLife:Number;
-		private var _yourLife:Number;
-		
 		public const GRAVITY:Number = 9.81;
 		public const BG_SPEED:Number = 300;
 		private static const OBSTACLE_SPEED:Number = 400;
@@ -105,12 +82,10 @@ package screens
 			touchHandler = new TouchHandler(stage);
 			obstacleGap = 0;
 			elapsed = 0;
-			yourLife = 4;
-			opponentLife = 4;
 			
 			bgPlayer = new backGround(true, BG_SPEED, this);
 			bgOpponent = new backGround(false, BG_SPEED, this);
-			hud = new HUD(yourLife, opponentLife, this);
+			hud = new HUD(this);
 			this.addChild(hud);
 			this.addChild(bgPlayer);
 			this.addChild(bgOpponent);

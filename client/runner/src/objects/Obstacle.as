@@ -45,10 +45,10 @@ package objects
 			if (this.bounds.intersects(gameRef.player.bounds))
 			{
 				gameRef.removeChild(this);
-				gameRef.yourLife --;
+				gameRef.player.TakeDamage(1);
 			} else if (this.bounds.intersects(gameRef.opponent.bounds)){
 				gameRef.removeChild(this);
-				gameRef.opponentLife --;
+				gameRef.opponent.TakeDamage(1);
 			}
 			
 			if (this.x < -50)

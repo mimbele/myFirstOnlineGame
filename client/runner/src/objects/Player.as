@@ -23,6 +23,13 @@ package objects
 		private var _state:int;
 		private var _nextAction:Function;
 		
+		
+		public function get life():int 
+		{
+			return _life;
+		}
+		private var _life:Number;
+		
 		public function get state():int 
 		{
 			return _state;
@@ -48,6 +55,7 @@ package objects
 			this.isMe = isMe;
 			this.inGame = inGame;
 			speed = 400;
+			_life = 4;
 			
 			if (isMe){
 				playerTexture = Assets.getTexture("player");
@@ -91,7 +99,7 @@ package objects
 		
 		private function onSwipeUp(e:Event):void 
 		{
-			if (state == IDLE)
+			if (state != JUMPING)
 				jump(null);
 			else
 				_nextAction = jump;
@@ -138,13 +146,19 @@ package objects
 		
 		public function jump(e:Event):void 
 		{
-			if (state == IDLE)
+			if (state != JUMPING)
 			{
 				velY = -500;
+				state = IDLE; // TODO: FIX THIS LATER, use: to change the texture
 				state = JUMPING;
 			}
 			if (isMe)
 				NetworkManager.getInstance().sfs.send(new PublicMessageRequest("jump", new SFSObject(), null));
+		}
+		
+		public function TakeDamage(dmg):void
+		{
+			_life -= dmg;
 		}
 
 		private function stateChangeHandler(e:Event):void 

@@ -16,7 +16,7 @@ public class UserJoinHandler extends BaseServerEventHandler
     {
         RoomExtension roomExt = (RoomExtension) getParentExtension();
         Room room = roomExt.getParentRoom();
-        if (room.getPlayersList().size() == 2)
+        if (room.getPlayersList().size() == 1)
         {
             send("start_game", new SFSObject(), room.getPlayersList());
             roomExt.StartGame();

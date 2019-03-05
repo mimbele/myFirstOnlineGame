@@ -17,7 +17,7 @@ package
 		[Embed(source="../media/graphics/loading_bg.png")]
 		public static const loaging_bg:Class;
 		
-		[Embed(source="../media/graphics/backButton.png")]
+		[Embed(source="../media/graphics/btn.png")]
 		public static const backButton:Class;
 		
 		[Embed(source="../media/graphics/mainMenu_bg.png")]

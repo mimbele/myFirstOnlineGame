@@ -17,19 +17,15 @@ package objects
 		private var bgImage:Image;	
 		private var gameRef:InGame;
 		private var yourHeartImage:Image;
-		private var yourLife:Number;
 		private var opponentHeartImage:Image;
-		private var opponentLife:Number;
 		private var yourLifeText:TextField;
 		private var opponentLifeText:TextField;
 		private var textFormat:TextFormat;
 		
-		public function HUD(yourLife:Number, opponentLife:Number, gameRef:InGame)
+		public function HUD(gameRef:InGame)
 		{
 			super();
 			this.gameRef = gameRef;
-			this.yourLife = yourLife;
-			this.opponentLife = opponentLife
 			this.addEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
 			
 		}
@@ -67,8 +63,8 @@ package objects
 		
 		private function onEnterframe(e:Event):void 
 		{
-			yourLifeText.text = "X " + gameRef.yourLife;
-			opponentLifeText.text = "X " + gameRef.opponentLife;
+			yourLifeText.text = "X " + gameRef.player.life;
+			opponentLifeText.text = "X " + gameRef.opponent.life;
 		}
 	}
 }
