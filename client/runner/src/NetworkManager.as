@@ -29,6 +29,7 @@ package
 		{
 			if (ins != null)
 				throw new Error("Use .getInstance() instead");
+			ServerTimeDiff = 0;
 		}
 		
 		public function SetLoginInfo(username:String, password:String):void

@@ -135,25 +135,27 @@ package objects
 		
 		public function crouch(e:Event):void 
 		{
-			if (state == IDLE)
-			{
-				crouchDuration = 0.6;
-				state = CROUCHING;
-			}
+			crouchDuration = 0.6;
+			state = CROUCHING;
 			if (isMe)
-				NetworkManager.getInstance().sfs.send(new PublicMessageRequest("crouch", new SFSObject(), null));
+			{
+				var params:SFSObject = new SFSObject();
+				params.putDouble("time", NetworkManager.getNow() + NetworkManager.getInstance().ServerTimeDiff + 2000);
+				NetworkManager.getInstance().sfs.send(new PublicMessageRequest("crouch", params, null));
+			}
 		}
 		
 		public function jump(e:Event):void 
 		{
-			if (state != JUMPING)
-			{
-				velY = -500;
-				state = IDLE; // TODO: FIX THIS LATER, use: to change the texture
-				state = JUMPING;
-			}
+			velY = -500;
+			state = IDLE; // TODO: FIX THIS LATER, use: to change the texture
+			state = JUMPING;
 			if (isMe)
-				NetworkManager.getInstance().sfs.send(new PublicMessageRequest("jump", new SFSObject(), null));
+			{
+				var params:SFSObject = new SFSObject();
+				params.putDouble("time", NetworkManager.getNow() + NetworkManager.getInstance().ServerTimeDiff + 2000);
+				NetworkManager.getInstance().sfs.send(new PublicMessageRequest("jump", params, null));
+			}
 		}
 		
 		public function TakeDamage(dmg):void
@@ -165,6 +167,7 @@ package objects
 		{
 			if (state == CROUCHING){
 				playerImage.texture = playerTexture_crouching;
+				velY = 0;
 				y = startingY+30;
 				
 			} else if(state == IDLE) {

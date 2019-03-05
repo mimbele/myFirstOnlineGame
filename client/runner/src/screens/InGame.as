@@ -14,7 +14,9 @@ package screens
 	import starling.events.Touch;
 	import starling.events.TouchPhase;
 	import objects.backGround;
+	import flash.events.TimerEvent;
 	import flash.utils.getTimer;
+	import flash.utils.Timer;
 
 	import Assets;
 	import TouchHandler;
@@ -114,8 +116,9 @@ package screens
 				var speed = params.getFloat("speed");
 				var isroof = params.getBool("isroof");
 				var time = params.getLong("time");
-				//trace("SPAWNING " + user + " " + isroof);
 				var isMine = user == NetworkManager.getInstance().sfs.mySelf.playerId;
+				if (!isMine)
+					time += 2000;
 				var y;
 				if (isMine)
 				
@@ -146,11 +149,29 @@ package screens
          
 			if (sender == NetworkManager.getInstance().sfs.mySelf)
 				return;
-			
+			var params:SFSObject = evt.params["data"] as SFSObject;
 			if (evt.params["message"] == "jump")
-				opponent.jump(null);
+			{
+				var time:Number = params.getDouble("time");
+				var delay = time - (NetworkManager.getNow() + NetworkManager.getInstance().ServerTimeDiff);
+				if (delay > 0)
+				{
+					var timer:Timer = new Timer(delay, 1);
+					timer.addEventListener(TimerEvent.TIMER_COMPLETE, function (e):void {opponent.jump(null);});
+					timer.start();
+				}
+			}
 			else if (evt.params["message"] == "crouch")
-				opponent.crouch(null);
+			{
+				var time:Number = params.getDouble("time");
+				var delay = time - (NetworkManager.getNow() + NetworkManager.getInstance().ServerTimeDiff);
+				if (delay > 0)
+				{
+					var timer:Timer = new Timer(delay, 1);
+					timer.addEventListener(TimerEvent.TIMER_COMPLETE, function (e):void {opponent.crouch(null);});
+					timer.start();
+				}
+			}
 		}
 		
 		protected function this_touchHandler(e:TouchEvent):void 

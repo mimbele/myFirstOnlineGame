@@ -6,11 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0a31a95-440c-4529-a865-2a21b6bdca9b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/com/runnergame/PingHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/runnergame/PingHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/runnergame/RoomExtension.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/runnergame/RoomExtension.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/runnergame/UserJoinHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/runnergame/UserJoinHandler.java" afterDir="false" />
-    </list>
+    <list default="true" id="b0a31a95-440c-4529-a865-2a21b6bdca9b" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
