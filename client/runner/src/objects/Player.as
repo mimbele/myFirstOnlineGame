@@ -122,6 +122,7 @@ package objects
 					state = IDLE;
 				}
 			}
+
 		}
 		
 		public function crouch(e:Event):void 

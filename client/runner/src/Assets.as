@@ -44,8 +44,17 @@ package
 		[Embed(source="../media/graphics/obstacle.png")]
 		public static const obstacle:Class;
 		
-		[Embed(source="../media/graphics/roofObstacle.png")] //
+		[Embed(source="../media/graphics/roofObstacle.png")] //50x210
 		public static const roofObstacle:Class;
+		
+		[Embed(source="../media/graphics/redHeart.png")] //34x30
+		public static const redHeart:Class;
+		
+		[Embed(source="../media/graphics/blueHeart.png")] //34x30
+		public static const blueHeart:Class;
+		
+		[Embed(source="../media/graphics/HUD_bg.png")] //940x40
+		public static const HUD_bg:Class;
 		
 		private static var gameTextures:Dictionary = new Dictionary();
 		

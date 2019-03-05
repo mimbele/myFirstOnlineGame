@@ -3,6 +3,7 @@ package screens
 	import com.smartfoxserver.v2.core.SFSEvent;
 	import com.smartfoxserver.v2.entities.User;
 	import com.smartfoxserver.v2.entities.data.SFSObject;
+	import objects.HUD;
 	import starling.events.KeyboardEvent;
 	import objects.Player;
 	import starling.display.Button;
@@ -27,6 +28,7 @@ package screens
 	{
 		private var bgPlayer:backGround;
 		private var bgOpponent:backGround;
+		private var hud:HUD;
 		
 		public function get player():Player 
 		{
@@ -36,24 +38,49 @@ package screens
 			return elapsed;
 		}
 		
-		public function get life():Number 
+
+		private var _player:Player;
+		
+		public function get opponent():Player 
 		{
-			return _life;
+			return _opponent;
 		}
 		
-		public function set life(value:Number):void 
+		public function set opponent(value:Player):void 
 		{
-			_life = value;
+			_opponent = value;
 		}
-		private var _player:Player;
-		private var opponent:Player;
+		
+		private var _opponent:Player;
 		
 		private var timePrevious:Number;
 		private var timeCurrent:Number;
 		private var elapsed:Number;
 		private var obstacleGap:Number;
 		private var touchHandler:TouchHandler;
-		private var _life:Number;
+		
+		public function get opponentLife():Number 
+		{
+			return _opponentLife;
+		}
+		
+		public function set opponentLife(value:Number):void 
+		{
+			_opponentLife = value;
+		}
+		
+		public function get yourLife():Number 
+		{
+			return _yourLife;
+		}
+		
+		public function set yourLife(value:Number):void 
+		{
+			_yourLife = value;
+		}
+		
+		private var _opponentLife:Number;
+		private var _yourLife:Number;
 		
 		public const GRAVITY:Number = 9.81;
 		public const BG_SPEED:Number = 300;
@@ -78,14 +105,17 @@ package screens
 			touchHandler = new TouchHandler(stage);
 			obstacleGap = 0;
 			elapsed = 0;
-			life = 4;
+			yourLife = 4;
+			opponentLife = 4;
 			
 			bgPlayer = new backGround(true, BG_SPEED, this);
 			bgOpponent = new backGround(false, BG_SPEED, this);
+			hud = new HUD(yourLife, opponentLife, this);
+			this.addChild(hud);
 			this.addChild(bgPlayer);
 			this.addChild(bgOpponent);
 			
-			trace (NetworkManager.getInstance().sfs.mySelf.playerId);
+			//trace (NetworkManager.getInstance().sfs.mySelf.playerId);
 			_player = new Player(this, true, stage.height-100);
 			opponent = new Player(this, false, stage.height-350);
 			this.addChild(player);
@@ -109,7 +139,7 @@ package screens
 				var speed = params.getFloat("speed");
 				var isroof = params.getBool("isroof");
 				var time = params.getLong("time");
-				trace("SPAWNING " + user + " " + isroof);
+				//trace("SPAWNING " + user + " " + isroof);
 				var isMine = user == NetworkManager.getInstance().sfs.mySelf.playerId;
 				var y;
 				if (isMine)
@@ -129,8 +159,8 @@ package screens
 				}
 				//y = stage.height - 170;
 				var now:Number = NetworkManager.getNow();
-				trace (now);
-				trace (time - NetworkManager.getInstance().ServerTimeDiff);
+				//trace (now);
+				//trace (time - NetworkManager.getInstance().ServerTimeDiff);
 				var obstacle:Obstacle = new Obstacle(this, isroof, speed, stage.width+x, y, time - NetworkManager.getInstance().ServerTimeDiff);
 			}
 		}
