@@ -55,7 +55,7 @@ package
 		
 		private function connect():void
 		{
-			NetworkManager.getInstance().Connect("127.0.0.1", 9933);
+			NetworkManager.getInstance().Connect("95.156.255.98", 9933);
 			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.CONNECTION, function (e):void{
 				if (e.params.success) 
 					progress.ratio = 0.75;
@@ -85,7 +85,8 @@ package
 		{
 			var now:Number = NetworkManager.getNow();
 			var params:SFSObject = e.params["params"] as SFSObject;
-			NetworkManager.getInstance().ServerTimeDiff = params.getLong("time") + (now - sentTime)/2 - now;
+			NetworkManager.getInstance().ServerTimeDiff = params.getLong("time") + (now - sentTime) / 2 - now;
+			trace((now - sentTime) / 2);
 			NetworkManager.getInstance().sfs.removeEventListener(SFSEvent.EXTENSION_RESPONSE, onPing);
 			progress.ratio = 1;
 			var timer:Timer = new Timer(1, 1);

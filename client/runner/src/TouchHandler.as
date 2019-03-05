@@ -2,8 +2,10 @@ package
 {
 	import flash.geom.Point;
 	import starling.display.Stage;
+	import starling.events.KeyboardEvent;
 	import starling.events.Touch;
 	import starling.events.TouchPhase;
+	import flash.ui.Keyboard;
 	/**
 	 * ...
 	 * @author Parhamic
@@ -14,11 +16,20 @@ package
 		private var touchStart:Point;
 		private var dragging:Boolean;
 		private var stage:Stage;
-		public function TouchHandler(stage) 
+		public function TouchHandler(stage:Stage) 
 		{
 			this.stage = stage;
 			touchStart = new Point();
 			dragging = false;
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+		}
+		
+		private function onKeyDown(e:KeyboardEvent):void
+		{
+			if(e.keyCode == Keyboard.W)
+				stage.dispatchEventWith("SWIPE_UP");
+			else if(e.keyCode == Keyboard.S)
+				stage.dispatchEventWith("SWIPE_DOWN");
 		}
 		
 		public function Update(touch:Touch):void

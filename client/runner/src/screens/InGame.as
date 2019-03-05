@@ -136,7 +136,7 @@ package screens
 				var now:Number = NetworkManager.getNow();
 				//trace (now);
 				//trace (time - NetworkManager.getInstance().ServerTimeDiff);
-				var obstacle:Obstacle = new Obstacle(this, isroof, speed, stage.width+x, y, time - NetworkManager.getInstance().ServerTimeDiff);
+				var obstacle:Obstacle = new Obstacle(this, isroof, speed, stage.stageWidth+x, y, time - NetworkManager.getInstance().ServerTimeDiff);
 			}
 		}
 		

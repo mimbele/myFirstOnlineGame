@@ -13,13 +13,6 @@ public class PingHandler extends BaseClientRequestHandler
     {
         SFSObject res = new SFSObject();
         res.putLong("time", System.currentTimeMillis());
-        try
-        {
-            Thread.sleep(200);
-        } catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
         send("ping", res, user);
     }
 }
