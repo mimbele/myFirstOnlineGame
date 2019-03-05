@@ -44,7 +44,7 @@ package
 		[Embed(source="../media/graphics/obstacle.png")]
 		public static const obstacle:Class;
 		
-		[Embed(source="../media/graphics/roofObstacle.png")]
+		[Embed(source="../media/graphics/roofObstacle.png")] //
 		public static const roofObstacle:Class;
 		
 		private static var gameTextures:Dictionary = new Dictionary();

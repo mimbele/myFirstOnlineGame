@@ -113,20 +113,21 @@ package screens
 				var isMine = user == NetworkManager.getInstance().sfs.mySelf.playerId;
 				var y;
 				if (isMine)
+				
 				{
 					if (isroof)
-						y = stage.height - 250;
+						y = stage.stageHeight - 250;
 					else
-						y = stage.height - 60;
+						y = stage.stageHeight - 60;
 				}
 				else
 				{
 					if (isroof)
-						y = 50;
+						y = stage.stageHeight - 250 - 250;
 					else
-						y = 250;
+						y = stage.stageHeight - 60 -250;
 				}
-				y = stage.height - 170;
+				//y = stage.height - 170;
 				var now:Number = NetworkManager.getNow();
 				trace (now);
 				trace (time - NetworkManager.getInstance().ServerTimeDiff);
