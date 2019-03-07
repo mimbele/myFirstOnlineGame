@@ -9,6 +9,7 @@ package screens
 	
 	public class MainMenu extends Sprite
 	{
+		public static var instance:MainMenu = null;
 		private var bgImage:Image;		
 		private var inGame:InGame;
 		private var findBtn:Button;
@@ -20,6 +21,8 @@ package screens
 			
 			
 			this.addEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
+			instance = this;
+			
 		}
 		
 		private function onAddedToStage():void

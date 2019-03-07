@@ -56,6 +56,12 @@ package
 		[Embed(source="../media/graphics/HUD_bg.png")] //940x40
 		public static const HUD_bg:Class;
 		
+		[Embed(source="../media/graphics/shieldItem.png")] //40x39
+		public static const shieldItem:Class;
+		
+		[Embed(source="../media/graphics/healItem.png")] //940x40
+		public static const healItem:Class;
+		
 		private static var gameTextures:Dictionary = new Dictionary();
 		
 		[Embed(source="../media/fonts/IMPACT.TTF", fontFamily="myFont", mimeType="application/x-font", embedAsCFF="false")]

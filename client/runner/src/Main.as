@@ -63,7 +63,7 @@ package
 				if (e.params.success)
 				{
 					progress.ratio = 0.75;
-					if (!NetworkManager.TryToLogin())
+					if (!NetworkManager.getInstance().TryToLogin())
 					{
 						userinfo = new UserInfo();
 						userinfo.x = (stage.stageWidth - userinfo.width ) * 0.5;
@@ -102,7 +102,7 @@ package
 			NetworkManager.getInstance().sfs.removeEventListener(SFSEvent.EXTENSION_RESPONSE, onPing);
 			progress.ratio = 1;
 			var timer:Timer = new Timer(1, 1);
-			timer.addEventListener(TimerEvent.TIMER_COMPLETE, function (e):void {stage.removeChild(progress); myStarling.start(); });
+			timer.addEventListener(TimerEvent.TIMER_COMPLETE, function (e):void {stage.removeChild(progress); myStarling.start();});
 			timer.start();
 		}
 	}

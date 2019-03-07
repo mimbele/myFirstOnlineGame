@@ -71,15 +71,15 @@ package
 			in_queue = false;
 		}
 		
-		public static function TryToLogin():Boolean 
+		public function TryToLogin():Boolean 
 		{
 			var up:UserPrefs = UserPrefs.Load();
 			if (up.username != "")
 			{
 				var params:SFSObject = new SFSObject();
 				params.putUtfString("authtoken", up.authtoken);
-				ins.sfs.send(new LoginRequest(up.username, "", "BasicExamples", params));
-				ins.sfs.addEventListener(SFSEvent.ROOM_JOIN, onRoomJoin);
+				sfs.send(new LoginRequest(up.username, "", "BasicExamples", params));
+				sfs.addEventListener(SFSEvent.ROOM_JOIN, onRoomJoin);
 				return true;
 			}
 			return false;
