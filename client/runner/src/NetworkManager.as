@@ -34,7 +34,6 @@ package
 		{
 			sfs = new SmartFox(false);
 			sfs.connect(host, port);
-			sfs.addEventListener(SFSEvent.CONNECTION, onConnection);
 		}
 		
 		public function FindOpponent()
@@ -72,17 +71,18 @@ package
 			in_queue = false;
 		}
 		
-		function onConnection(evt:SFSEvent):void
+		public static function TryToLogin():Boolean 
 		{
-			sfs.removeEventListener(SFSEvent.CONNECTION, onConnection);
-			if (evt.params.success)
+			var up:UserPrefs = UserPrefs.Load();
+			if (up.username != "")
 			{
-				var up:UserPrefs = UserPrefs.Load();
 				var params:SFSObject = new SFSObject();
 				params.putUtfString("authtoken", up.authtoken);
-				sfs.send(new LoginRequest(up.username, "", "BasicExamples", params));
-				sfs.addEventListener(SFSEvent.ROOM_JOIN, onRoomJoin);
+				ins.sfs.send(new LoginRequest(up.username, "", "BasicExamples", params));
+				ins.sfs.addEventListener(SFSEvent.ROOM_JOIN, onRoomJoin);
+				return true;
 			}
+			return false;
 		}
 		
 		function onRoomJoin(evt:SFSEvent)

@@ -33,12 +33,9 @@ package
 			progress.x = (stage.stageWidth - progress.width ) * 0.5;
 			progress.y = (stage.stageHeight- progress.height);
 			stage.addChild(progress);
-			userinfo = new UserInfo();
-			userinfo.x = (stage.stageWidth - userinfo.width ) * 0.5;
-			userinfo.y = (stage.stageHeight - userinfo.height) - 350;
-			stage.addChild(userinfo);
 			loaderInfo.addEventListener(Event.COMPLETE, loader_eventCompleteHandler);
 		}
+		
 		
 		private function loader_eventCompleteHandler(e:Event):void 
 		{
@@ -63,8 +60,17 @@ package
 		{
 			NetworkManager.getInstance().Connect("192.168.10.198", 9933);
 			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.CONNECTION, function (e):void{
-				if (e.params.success) 
+				if (e.params.success)
+				{
 					progress.ratio = 0.75;
+					if (!NetworkManager.TryToLogin())
+					{
+						userinfo = new UserInfo();
+						userinfo.x = (stage.stageWidth - userinfo.width ) * 0.5;
+						userinfo.y = (stage.stageHeight - userinfo.height) - 350;
+						stage.addChild(userinfo);
+					}
+				}
 				else
 					connect();
 			});

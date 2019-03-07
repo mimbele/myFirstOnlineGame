@@ -136,10 +136,7 @@ package screens
 					else
 						y = stage.stageHeight - 60 -250;
 				}
-				//y = stage.height - 170;
 				var now:Number = NetworkManager.getNow();
-				//trace (now);
-				//trace (time - NetworkManager.getInstance().ServerTimeDiff);
 				var obstacle:Obstacle = new Obstacle(this, id, isroof, speed, stage.stageWidth+x, y, time - NetworkManager.getInstance().ServerTimeDiff);
 			}
 		}
