@@ -116,9 +116,10 @@ package screens
 				var speed = params.getFloat("speed");
 				var isroof = params.getBool("isroof");
 				var time = params.getLong("time");
+				var id = params.getInt("id");
 				var isMine = user == NetworkManager.getInstance().sfs.mySelf.playerId;
 				if (!isMine)
-					time += 2000;
+					time += NetworkManager.GLOBAL_DELAY;
 				var y;
 				if (isMine)
 				
@@ -139,7 +140,7 @@ package screens
 				var now:Number = NetworkManager.getNow();
 				//trace (now);
 				//trace (time - NetworkManager.getInstance().ServerTimeDiff);
-				var obstacle:Obstacle = new Obstacle(this, isroof, speed, stage.stageWidth+x, y, time - NetworkManager.getInstance().ServerTimeDiff);
+				var obstacle:Obstacle = new Obstacle(this, id, isroof, speed, stage.stageWidth+x, y, time - NetworkManager.getInstance().ServerTimeDiff);
 			}
 		}
 		
@@ -150,10 +151,12 @@ package screens
 			if (sender == NetworkManager.getInstance().sfs.mySelf)
 				return;
 			var params:SFSObject = evt.params["data"] as SFSObject;
+			var time:Number = params.getLong("time");
+			if (time == null || time == undefined)
+				time = 0;
+			var delay = time - (NetworkManager.getNow() + NetworkManager.getInstance().ServerTimeDiff);
 			if (evt.params["message"] == "jump")
 			{
-				var time:Number = params.getDouble("time");
-				var delay = time - (NetworkManager.getNow() + NetworkManager.getInstance().ServerTimeDiff);
 				if (delay > 0)
 				{
 					var timer:Timer = new Timer(delay, 1);
@@ -163,12 +166,30 @@ package screens
 			}
 			else if (evt.params["message"] == "crouch")
 			{
-				var time:Number = params.getDouble("time");
-				var delay = time - (NetworkManager.getNow() + NetworkManager.getInstance().ServerTimeDiff);
 				if (delay > 0)
 				{
 					var timer:Timer = new Timer(delay, 1);
 					timer.addEventListener(TimerEvent.TIMER_COMPLETE, function (e):void {opponent.crouch(null);});
+					timer.start();
+				}
+			}
+			else if (evt.params["message"] = "take_damage")
+			{
+				if (delay > 0)
+				{
+					var timer:Timer = new Timer(delay, 1);
+					timer.addEventListener(TimerEvent.TIMER_COMPLETE, function (e):void {
+						opponent.TakeDamage(params.getInt("damage"));
+						
+						for (var i = 0; i < numChildren; i++)
+						{
+							if (getChildAt(i).name == "obstacle" && (getChildAt(i) as Obstacle).id == params.getInt("obstacle"))
+							{
+								removeChildAt(i);
+								break;
+							}
+						}
+					});
 					timer.start();
 				}
 			}

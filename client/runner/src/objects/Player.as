@@ -68,8 +68,9 @@ package objects
 			state = IDLE;
 			velY = 0;
 			this.startingY = startingY;
-			playerImage = new Image(playerTexture);
 			y = startingY;
+			playerImage = new Image(playerTexture);
+			
 			this.addEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
 			addEventListener("stateChange", stateChangeHandler);
 		}
@@ -140,7 +141,7 @@ package objects
 			if (isMe)
 			{
 				var params:SFSObject = new SFSObject();
-				params.putDouble("time", NetworkManager.getNow() + NetworkManager.getInstance().ServerTimeDiff + 2000);
+				NetworkManager.putTime(params);
 				NetworkManager.getInstance().sfs.send(new PublicMessageRequest("crouch", params, null));
 			}
 		}
@@ -153,7 +154,7 @@ package objects
 			if (isMe)
 			{
 				var params:SFSObject = new SFSObject();
-				params.putDouble("time", NetworkManager.getNow() + NetworkManager.getInstance().ServerTimeDiff + 2000);
+				NetworkManager.putTime(params);
 				NetworkManager.getInstance().sfs.send(new PublicMessageRequest("jump", params, null));
 			}
 		}

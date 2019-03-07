@@ -1,5 +1,7 @@
 package objects
 {
+	import com.smartfoxserver.v2.entities.data.SFSObject;
+	import com.smartfoxserver.v2.requests.PublicMessageRequest;
 	import screens.InGame;
 	import starling.display.Image;
 	import starling.display.Sprite;
@@ -11,17 +13,21 @@ package objects
 		private var ObstacleImage:Image;
 		private var gameRef:InGame;
 		private var obSpeed:Number;
+		
 		private var startTime:Number;
 		private var startX:Number;
 		
+		public var id:Number;
 		
-		public function Obstacle(inGame:InGame, isRoof:Boolean, speed:Number, x, y, startTime)
+		
+		public function Obstacle(inGame:InGame, id, isRoof:Boolean, speed:Number, x, y, startTime)
 		{
 			super();
-			
+			name = "obstacle";
 			gameRef = inGame;
 			obSpeed = speed;
 			startX = x;
+			this.id = id;
 			this.y = y;
 			this.startTime = startTime;
 			
@@ -46,9 +52,11 @@ package objects
 			{
 				gameRef.removeChild(this);
 				gameRef.player.TakeDamage(1);
-			} else if (this.bounds.intersects(gameRef.opponent.bounds)){
-				gameRef.removeChild(this);
-				gameRef.opponent.TakeDamage(1);
+				var params:SFSObject = new SFSObject();
+				NetworkManager.putTime(params);
+				params.putInt("damage", 1);
+				params.putInt("obstacle", id);
+				NetworkManager.getInstance().sfs.send(new PublicMessageRequest("take_damage", params));
 			}
 			
 			if (this.x < -50)

@@ -17,25 +17,17 @@ package
 	 */
 	public class NetworkManager
 	{
+		public static const GLOBAL_DELAY = 1000;
 		public var sfs:SmartFox;
 		public var in_queue:Boolean = false;
 		public var ServerTimeDiff:Number;
 		private static var ins:NetworkManager = null;
-		
-		private var username:String = "";
-		private var password:String = "";
 		
 		function NetworkManager()
 		{
 			if (ins != null)
 				throw new Error("Use .getInstance() instead");
 			ServerTimeDiff = 0;
-		}
-		
-		public function SetLoginInfo(username:String, password:String):void
-		{
-			this.username = username;
-			this.password = password;
 		}
 		
 		public function Connect(host:String, port:int):void
@@ -51,7 +43,7 @@ package
 				return;
 			if (sfs.joinedRooms.length > 0) // already in queue
 				return;
-			var rooms:Array.<Room> = sfs.roomList;
+			var rooms:Array.<Room> = sfs.roomManager.getRoomList();
 			var joined = false;
 			for each(var room in rooms)
 			{
@@ -76,7 +68,7 @@ package
 		}
 		public function CancelFind()
 		{
-			sfs.send (new LeaveRoomRequest(sfs.lastJoinedRoom));
+			sfs.send (new LeaveRoomRequest());
 			in_queue = false;
 		}
 		
@@ -85,7 +77,10 @@ package
 			sfs.removeEventListener(SFSEvent.CONNECTION, onConnection);
 			if (evt.params.success)
 			{
-				sfs.send(new LoginRequest(username, password, "BasicExamples", new SFSObject()));
+				var up:UserPrefs = UserPrefs.Load();
+				var params:SFSObject = new SFSObject();
+				params.putUtfString("authtoken", up.authtoken);
+				sfs.send(new LoginRequest(up.username, "", "BasicExamples", params));
 				sfs.addEventListener(SFSEvent.ROOM_JOIN, onRoomJoin);
 			}
 		}
@@ -100,6 +95,10 @@ package
 			if (ins == null)
 				ins = new NetworkManager();
 			return ins;
+		}
+		public static function putTime(params):void
+		{
+			params.putLong("time", getNow() + getInstance().ServerTimeDiff + GLOBAL_DELAY);
 		}
 		public static function getNow():Number
 		{

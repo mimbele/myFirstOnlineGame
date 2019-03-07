@@ -26,16 +26,19 @@ public class RoomExtension extends  SFSExtension
     }
     public void destroy()
     {
-        spawner.cancel(true);
+        if (spawner != null)
+            spawner.cancel(true);
     }
     class SpawnObstacles implements Runnable
     {
         private int ticks;
+        private int obstacles_count;
         private int spawnTurn;
         SpawnObstacles()
         {
             ticks = 0;
             spawnTurn = 1;
+            obstacles_count = 0;
         }
         @Override
         public void run()
@@ -48,6 +51,7 @@ public class RoomExtension extends  SFSExtension
                 params.putBool("isroof", Math.random() < 0.5f);
                 params.putInt("user", spawnTurn);
                 params.putLong("time", System.currentTimeMillis());
+                params.putInt("id", obstacles_count++);
                 send("spawn_obstacle", params, getParentRoom().getPlayersList());
                 
                 spawnTurn = 3 - spawnTurn;
