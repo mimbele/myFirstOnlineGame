@@ -10,6 +10,7 @@ package
 	import screens.InGame;
 	import screens.MainMenu;
 	import screens.GameOver;
+	import screens.UserInfo;
 	import starling.core.Starling;
 	import utils.ProgressBar;
 	import starling.animation.DelayedCall;
@@ -21,6 +22,7 @@ package
 	{
 		private var myStarling:Starling;
 		private var progress:ProgressBar;
+		private var userinfo:UserInfo;
 		public function Main()
 		{
 
@@ -31,6 +33,10 @@ package
 			progress.x = (stage.stageWidth - progress.width ) * 0.5;
 			progress.y = (stage.stageHeight- progress.height);
 			stage.addChild(progress);
+			userinfo = new UserInfo();
+			userinfo.x = (stage.stageWidth - userinfo.width ) * 0.5;
+			userinfo.y = (stage.stageHeight - userinfo.height) - 350;
+			stage.addChild(userinfo);
 			loaderInfo.addEventListener(Event.COMPLETE, loader_eventCompleteHandler);
 		}
 		
@@ -55,7 +61,7 @@ package
 		
 		private function connect():void
 		{
-			NetworkManager.getInstance().Connect("95.156.255.98", 9933);
+			NetworkManager.getInstance().Connect("192.168.10.198", 9933);
 			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.CONNECTION, function (e):void{
 				if (e.params.success) 
 					progress.ratio = 0.75;
