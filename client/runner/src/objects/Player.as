@@ -22,12 +22,20 @@ package objects
 		private var startingY:Number;
 		private var _state:int;
 		private var _nextAction:Function;
+		private var _hasShield:Boolean;
+		private var shieldTimeRemained:Number;
 		
+		public function get hasShield():Boolean 
+		{
+			return _hasShield;
+		}		
 		
-		public function get life():int 
+		public function get life():Number 
 		{
 			return _life;
 		}
+		
+
 		private var _life:Number;
 		
 		public function get state():int 
@@ -56,6 +64,8 @@ package objects
 			this.inGame = inGame;
 			speed = 400;
 			_life = 4;
+			_hasShield = false;
+			shieldTimeRemained = 0;
 			
 			if (isMe){
 				playerTexture = Assets.getTexture("player");
@@ -163,7 +173,28 @@ package objects
 		{
 			_life -= dmg;
 		}
-
+		
+		public function Heal(heal):void
+		{
+			_life += heal;
+		}
+		
+		public function ActivateShield(){
+			_hasShield = true;
+			shieldTimeRemained = 400;
+			this.addEventListener(Event.ENTER_FRAME, ActivateShield_enterFrameHandler);
+		}
+		
+		private function ActivateShield_enterFrameHandler(e:Event):void 
+		{
+			shieldTimeRemained --;
+			if (shieldTimeRemained < 0){
+				_hasShield = false;
+				shieldTimeRemained = 0;
+				this.removeEventListener(Event.ENTER_FRAME, ActivateShield_enterFrameHandler);
+			}
+		}
+		
 		private function stateChangeHandler(e:Event):void 
 		{
 			if (state == CROUCHING){

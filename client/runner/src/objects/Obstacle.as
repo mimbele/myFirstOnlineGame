@@ -48,7 +48,7 @@ package objects
 		{
 			var now:Number = NetworkManager.getNow();
 			this.x = startX - ((now - startTime) * obSpeed * 0.001);
-			if (this.bounds.intersects(gameRef.player.bounds))
+			if ((this.bounds.intersects(gameRef.player.bounds)) && (gameRef.player.hasShield == false))
 			{
 				gameRef.removeChild(this);
 				gameRef.player.TakeDamage(1);
@@ -56,7 +56,7 @@ package objects
 				NetworkManager.putTime(params);
 				params.putInt("damage", 1);
 				params.putInt("obstacle", id);
-				NetworkManager.getInstance().sfs.send(new PublicMessageRequest("take_damage", params));
+				NetworkManager.getInstance().sfs.send(new PublicMessageRequest("take_damage", params));				
 			}
 			
 			if (this.x < -50)

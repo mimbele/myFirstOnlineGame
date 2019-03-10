@@ -4,6 +4,7 @@ package screens
 	import com.smartfoxserver.v2.entities.User;
 	import com.smartfoxserver.v2.entities.data.SFSObject;
 	import objects.HUD;
+	import objects.Item;
 	import starling.events.KeyboardEvent;
 	import objects.Player;
 	import starling.display.Button;
@@ -36,6 +37,7 @@ package screens
 		{
 			return _player;
 		}
+
 		public function get deltaTime():Number{
 			return elapsed;
 		}
@@ -139,9 +141,22 @@ package screens
 				}
 				var now:Number = NetworkManager.getNow();
 				var obstacle:Obstacle = new Obstacle(this, id, isroof, speed, stage.stageWidth + x, y, time - NetworkManager.getInstance().ServerTimeDiff);
-				if (item != "")
+				if (item == "HEAL")
 				{
-					//var item:Item = new Item(this, id, isroof, speed, stage.stageWidth + x, y, time - NetworkManager.getInstance().ServerTimeDiff);
+					if (isMine)
+						y = stage.stageHeight - 100;
+					else
+						y = stage.stageHeight - 100 - 250;
+					var randomX:Number = Math.random() * 100 + 75;
+					var item:Item = new Item(this, id, "HEAL", speed, stage.stageWidth + x + randomX, y, time - NetworkManager.getInstance().ServerTimeDiff);
+				} else if (item == "SHIELD")
+				{
+					if (isMine)
+						y = stage.stageHeight - 100;
+					else
+						y = stage.stageHeight - 100 - 250;
+					var randomX:Number = Math.random() * 100 + 75;
+					var item:Item = new Item(this, id, "SHIELD", speed, stage.stageWidth + x + randomX, y, time - NetworkManager.getInstance().ServerTimeDiff);
 				}
 			}
 		}

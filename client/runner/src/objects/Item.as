@@ -1,8 +1,11 @@
 package objects 
 {
+	import com.smartfoxserver.v2.entities.data.SFSObject;
+	import com.smartfoxserver.v2.requests.PublicMessageRequest;
 	import screens.InGame;
 	import starling.display.Image;
 	import starling.display.Sprite;
+	import starling.events.Event;
 	/**
 	 * ...
 	 * @author mimbele
@@ -53,10 +56,10 @@ package objects
 				gameRef.removeChild(this);
 				
 				if (type == "HEAL"){
-					gameRef.player.life ++;
+					gameRef.player.Heal(1);
 
 				}else if (type == "SHIELD"){
-					//TODO: gameRef.player.hasShield = true
+					gameRef.player.ActivateShield();
 				}
 				
 				var params:SFSObject = new SFSObject();

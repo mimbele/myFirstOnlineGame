@@ -21,6 +21,7 @@ package objects
 		private var yourLifeText:TextField;
 		private var opponentLifeText:TextField;
 		private var textFormat:TextFormat;
+		private var shieldImage:Image;
 		
 		public function HUD(gameRef:InGame)
 		{
@@ -43,10 +44,16 @@ package objects
 			opponentHeartImage = new Image(Assets.getTexture("blueHeart"));
 			this.addChild(opponentHeartImage);
 			
+			shieldImage = new Image(Assets.getTexture("shieldItem"));
+			this.addChild(shieldImage);
+			shieldImage.visible = false;
+			
 			yourHeartImage.x = 10;
 			yourHeartImage.y = 5;
 			opponentHeartImage.x = this.width / 2;
 			opponentHeartImage.y = 5;
+			shieldImage.x = yourHeartImage.width + 50;
+			shieldImage.y = 1;
 			
 			
 			textFormat = new TextFormat("myFont", 24, 0x000000, "left", "top"); 
@@ -65,6 +72,11 @@ package objects
 		{
 			yourLifeText.text = "X " + gameRef.player.life;
 			opponentLifeText.text = "X " + gameRef.opponent.life;
+			if (gameRef.player.hasShield){
+				shieldImage.visible = true;
+			} else{
+				shieldImage.visible = false;
+			}
 		}
 	}
 }

@@ -58,7 +58,7 @@ package
 		
 		private function connect():void
 		{
-			NetworkManager.getInstance().Connect("192.168.10.198", 9933);
+			NetworkManager.getInstance().Connect("localhost", 9933);
 			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.CONNECTION, function (e):void{
 				if (e.params.success)
 				{

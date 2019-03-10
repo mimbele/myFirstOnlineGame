@@ -56,10 +56,10 @@ package
 		[Embed(source="../media/graphics/HUD_bg.png")] //940x40
 		public static const HUD_bg:Class;
 		
-		[Embed(source="../media/graphics/shieldItem.png")] //40x39
+		[Embed(source="../media/graphics/shieldItem.PNG")] //40x39
 		public static const shieldItem:Class;
 		
-		[Embed(source="../media/graphics/healItem.png")] //940x40
+		[Embed(source="../media/graphics/healItem.png")] //34x30
 		public static const healItem:Class;
 		
 		private static var gameTextures:Dictionary = new Dictionary();
