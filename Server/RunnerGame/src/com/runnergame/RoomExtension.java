@@ -52,6 +52,7 @@ public class RoomExtension extends  SFSExtension
                 params.putInt("user", spawnTurn);
                 params.putLong("time", System.currentTimeMillis());
                 params.putInt("id", obstacles_count++);
+                params.putUtfString("item", Math.random() < 0.5f ? (int)(Math.random()*2) < 1 ? "SHIELD" : "HEAL" : "");
                 send("spawn_obstacle", params, getParentRoom().getPlayersList());
                 
                 spawnTurn = 3 - spawnTurn;

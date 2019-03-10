@@ -61,9 +61,8 @@ package objects
 				
 				var params:SFSObject = new SFSObject();
 				NetworkManager.putTime(params);
-				
-				params.putInt("obstacle", id);
-				NetworkManager.getInstance().sfs.send(new PublicMessageRequest("itemPicked", params));
+				params.putInt("item", id);
+				NetworkManager.getInstance().sfs.send(new PublicMessageRequest("item_picked", params));
 			}
 			
 			if (this.x < -50)

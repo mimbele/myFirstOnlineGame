@@ -43,7 +43,9 @@ package
 			progress.ratio = 0.1;
 
 			myStarling = new Starling(MainMenu, stage);
+			myStarling.skipUnchangedFrames = true;
 			myStarling.antiAliasing = 1;
+			myStarling.showStatsAt();
 			myStarling.addEventListener(Event.CONTEXT3D_CREATE, myStarling_contex3DCreateHandler);
 		}
 		
@@ -53,8 +55,6 @@ package
 			progress.ratio = 0.5;
 			connect();
 		}
-		
-	
 		
 		private function connect():void
 		{
@@ -78,7 +78,14 @@ package
 		}
 		
 		private function onLogin(e:SFSEvent):void 
-		{	
+		{
+			var params:SFSObject = e.params.data as SFSObject;
+			var up = UserPrefs.Load();
+			if (params != null && params.getUtfString("authtoken") != null)
+			{
+				up.authtoken = params.getUtfString("authtoken");
+				up.Save();
+			}
 			CalculatePing();
 			NetworkManager.getInstance().sfs.removeEventListener(SFSEvent.LOGIN, onLogin);
 		}

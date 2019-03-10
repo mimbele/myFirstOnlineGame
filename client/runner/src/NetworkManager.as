@@ -10,12 +10,13 @@ package
 	import com.smartfoxserver.v2.entities.data.SFSObject;
 	import com.smartfoxserver.v2.requests.LoginRequest;
 	import com.smartfoxserver.v2.requests.JoinRoomRequest;
+	import starling.events.EventDispatcher;
 	
 	/**
 	 * ...
 	 * @author Parhamic
 	 */
-	public class NetworkManager
+	public class NetworkManager extends EventDispatcher
 	{
 		public static const GLOBAL_DELAY = 1000;
 		public var sfs:SmartFox;
@@ -34,6 +35,7 @@ package
 		{
 			sfs = new SmartFox(false);
 			sfs.connect(host, port);
+			sfs.addEventListener(SFSEvent.ROOM_JOIN, onRoomJoin);
 		}
 		
 		public function FindOpponent()
@@ -69,6 +71,7 @@ package
 		{
 			sfs.send (new LeaveRoomRequest());
 			in_queue = false;
+			dispatchEventWith("2");
 		}
 		
 		public function TryToLogin():Boolean 
@@ -79,7 +82,6 @@ package
 				var params:SFSObject = new SFSObject();
 				params.putUtfString("authtoken", up.authtoken);
 				sfs.send(new LoginRequest(up.username, "", "BasicExamples", params));
-				sfs.addEventListener(SFSEvent.ROOM_JOIN, onRoomJoin);
 				return true;
 			}
 			return false;
@@ -88,6 +90,7 @@ package
 		function onRoomJoin(evt:SFSEvent)
 		{
 			in_queue = true;
+			dispatchEventWith("1");
 		}
 		
 		public static function getInstance():NetworkManager

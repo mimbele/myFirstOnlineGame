@@ -10,7 +10,7 @@ cd %~dp0 & cd ..
 
 :: Android packaging
 set AND_CERT_NAME="runner"
-set AND_CERT_PASS=fd
+set AND_CERT_PASS=12345
 set AND_CERT_FILE=cert\runner.p12
 set AND_ICONS=icons/android
 

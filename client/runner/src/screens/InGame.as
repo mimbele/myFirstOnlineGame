@@ -117,6 +117,7 @@ package screens
 				var isroof = params.getBool("isroof");
 				var time = params.getLong("time");
 				var id = params.getInt("id");
+				var item = params.getUtfString("item");
 				var isMine = user == NetworkManager.getInstance().sfs.mySelf.playerId;
 				if (!isMine)
 					time += NetworkManager.GLOBAL_DELAY;
@@ -137,7 +138,11 @@ package screens
 						y = stage.stageHeight - 60 -250;
 				}
 				var now:Number = NetworkManager.getNow();
-				var obstacle:Obstacle = new Obstacle(this, id, isroof, speed, stage.stageWidth+x, y, time - NetworkManager.getInstance().ServerTimeDiff);
+				var obstacle:Obstacle = new Obstacle(this, id, isroof, speed, stage.stageWidth + x, y, time - NetworkManager.getInstance().ServerTimeDiff);
+				if (item != "")
+				{
+					//var item:Item = new Item(this, id, isroof, speed, stage.stageWidth + x, y, time - NetworkManager.getInstance().ServerTimeDiff);
+				}
 			}
 		}
 		

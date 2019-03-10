@@ -2,27 +2,31 @@ package screens
 {
 	import com.smartfoxserver.v2.core.SFSEvent;
 	import screens.InGame;
-	import starling.display.Button;
+	//import starling.display.Button;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	
+	import feathers.controls.Button;
+	import feathers.controls.TextCallout;
+	import feathers.themes.MinimalMobileTheme;
+	
 	public class MainMenu extends Sprite
 	{
 		public static var instance:MainMenu = null;
-		private var bgImage:Image;		
+		private var bgImage:Image;
 		private var inGame:InGame;
-		private var findBtn:Button;
-		
+		private var findButton:Button;
 		
 		public function MainMenu()
 		{
-			super();
+			new MinimalMobileTheme();
 			
+			super();
 			
 			this.addEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
 			instance = this;
-			
+		
 		}
 		
 		private function onAddedToStage():void
@@ -34,22 +38,37 @@ package screens
 			bgImage = new Image(Assets.getTexture("mainMenu_bg"));
 			this.addChild(bgImage);
 			
-			findBtn = new Button(Assets.getTexture("btn"));
-			this.addChild(findBtn);
+			findButton = new Button();
+			findButton.label = "FIND OPPONENT";
+			this.addChild(findButton);
 			
-			findBtn.x = (stage.stageWidth - findBtn.width) / 2;
-			findBtn.y = (stage.stageHeight - findBtn.height) / 2;
+			findButton.validate();
+			findButton.x = (stage.stageWidth - findButton.width) / 2;
+			findButton.y = (stage.stageHeight - findButton.height) / 2;
 			
-			findBtn.addEventListener(Event.TRIGGERED, findBtn_clickHandler);
-			NetworkManager.getInstance().FindOpponent(); // TODO: REMOVE
+			findButton.addEventListener(Event.TRIGGERED, findBtn_clickHandler);
+			NetworkManager.getInstance().addEventListener("1", function()
+			{
+				findButton.label = "CANCEL";
+				findButton.validate();
+				findButton.x = (stage.stageWidth - findButton.width) / 2;
+			});
+			NetworkManager.getInstance().addEventListener("2", function()
+			{
+				findButton.label = "FIND OPPONENT";
+				findButton.validate();
+				findButton.x = (stage.stageWidth - findButton.width) / 2;
+			});
 		}
-
 		
 		function onEnterFrame():void
 		{
-			findBtn.text = NetworkManager.getInstance().in_queue ? "CANCEL" : "FIND OPPONENT";
+			//findBtn.label = NetworkManager.getInstance().in_queue ? "CANCEL" : "FIND OPPONENT";
+			//findBtn.x = (stage.stageWidth - findBtn.width) / 2;
+			//findBtn.y = (stage.stageHeight - findBtn.height) / 2;
 		}
-		private function onResponse(e:SFSEvent):void 
+		
+		private function onResponse(e:SFSEvent):void
 		{
 			var cmd:String = e.params["cmd"] as String;
 			if (cmd == "start_game")
@@ -59,7 +78,8 @@ package screens
 				NetworkManager.getInstance().sfs.removeEventListener(SFSEvent.EXTENSION_RESPONSE, onResponse);
 			}
 		}
-		private function findBtn_clickHandler(e:Event):void 
+		
+		private function findBtn_clickHandler(e:Event):void
 		{
 			if (NetworkManager.getInstance().in_queue)
 				NetworkManager.getInstance().CancelFind();

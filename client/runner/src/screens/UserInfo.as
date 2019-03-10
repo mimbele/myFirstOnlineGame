@@ -37,15 +37,20 @@ package screens
 			
 			input.background = true;
 			
-			
 			this.addChild(confirmBtn);
 			this.addChild(input);
-			
 		}
 		
 		private function onClicked(e:MouseEvent):void 
 		{
-			//trace("sdfsdf");
+			var username = input.text;
+			var up:UserPrefs = new UserPrefs();
+			up.username = username;
+			up.Save();
+			if (NetworkManager.getInstance().TryToLogin())
+			{
+				parent.removeChild(this);
+			}
 		}
 		
 	}
