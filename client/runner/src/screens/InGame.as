@@ -114,6 +114,7 @@ package screens
 			if (cmd == "spawn_obstacle")
 			{
 				var x = params.getFloat("x");
+				var x2 = params.getFloat("item_x");
 				var user = params.getInt("user");
 				var speed = params.getFloat("speed");
 				var isroof = params.getBool("isroof");
@@ -141,22 +142,18 @@ package screens
 				}
 				var now:Number = NetworkManager.getNow();
 				var obstacle:Obstacle = new Obstacle(this, id, isroof, speed, stage.stageWidth + x, y, time - NetworkManager.getInstance().ServerTimeDiff);
+				
+				if (isMine)
+						y = stage.stageHeight - 100 - x2 * 0.3;
+				else
+					y = stage.stageHeight - 100 - 250 - x2 * 0.3;
+				
 				if (item == "HEAL")
 				{
-					if (isMine)
-						y = stage.stageHeight - 100;
-					else
-						y = stage.stageHeight - 100 - 250;
-					var randomX:Number = Math.random() * 100 + 75;
-					var item:Item = new Item(this, id, "HEAL", speed, stage.stageWidth + x + randomX, y, time - NetworkManager.getInstance().ServerTimeDiff);
+					var item:Item = new Item(this, id, "HEAL", speed, stage.stageWidth + x + x2 + 75, y, time - NetworkManager.getInstance().ServerTimeDiff);
 				} else if (item == "SHIELD")
 				{
-					if (isMine)
-						y = stage.stageHeight - 100;
-					else
-						y = stage.stageHeight - 100 - 250;
-					var randomX:Number = Math.random() * 100 + 75;
-					var item:Item = new Item(this, id, "SHIELD", speed, stage.stageWidth + x + randomX, y, time - NetworkManager.getInstance().ServerTimeDiff);
+					var item:Item = new Item(this, id, "SHIELD", speed, stage.stageWidth + x + x2 + 75, y, time - NetworkManager.getInstance().ServerTimeDiff);
 				}
 			}
 		}
