@@ -1,5 +1,6 @@
 package screens
 {
+	import objects.Player;
 	import screens.InGame;
 	import starling.display.Button;
 	import starling.display.Image;
@@ -14,11 +15,19 @@ package screens
 	{
 		private var bgImage:Image;		
 		private var backBtn:Button;
+		private var opponent:Player;
+		private var me:Player;
+		private var hasWon:Boolean;
+		private var gameRef:InGame;
 		
 		
-		public function GameOver()
+		public function GameOver(inGame:InGame, me:Player, opponent:Player, hasWon:Boolean) // me and opponent refrences are for showing score
 		{
 			super();
+			this.me = me;
+			this.opponent = opponent;
+			this.hasWon = hasWon;
+			gameRef = inGame;
 			
 			this.addEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
 		}
@@ -26,15 +35,26 @@ package screens
 		private function onAddedToStage():void
 		{
 			this.removeEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
+			var btnText:String;
 			
-			bgImage = new Image(Assets.getTexture("gameOver_bg"));
-			this.addChild(bgImage);
+			if (hasWon){
+				bgImage = new Image(Assets.getTexture("win_bg"));
+				this.addChild(bgImage);
+				
+				backBtn = new Button(Assets.getTexture("btn"), "WIN AGAIN");
+				this.addChild(backBtn);
+			} else{
+				bgImage = new Image(Assets.getTexture("lose_bg"));
+				this.addChild(bgImage);
+				
+				backBtn = new Button(Assets.getTexture("btn"), "TRY AGAIN");
+				this.addChild(backBtn);
+			}
 			
-			backBtn = new Button(Assets.getTexture("btn"), "BACK TO MENU");
-			this.addChild(backBtn);
+			
 			
 			backBtn.x = (stage.stageWidth - backBtn.width) / 2;
-			backBtn.y = (stage.stageHeight - backBtn.height) / 2;
+			backBtn.y = (stage.stageHeight - backBtn.height) / 2 + 200;
 			
 			backBtn.addEventListener(Event.TRIGGERED, backBtn_clickHandler);
 		}
@@ -43,6 +63,7 @@ package screens
 		
 		private function backBtn_clickHandler(e:Event):void 
 		{
+			backBtn.removeEventListener(Event.TRIGGERED, backBtn_clickHandler);
 			trace("back btn clicked");
 		}
 	}

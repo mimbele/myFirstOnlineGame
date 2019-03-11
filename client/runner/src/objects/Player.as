@@ -181,7 +181,7 @@ package objects
 		
 		public function ActivateShield(){
 			_hasShield = true;
-			shieldTimeRemained = 400;
+			shieldTimeRemained = 200;
 			this.addEventListener(Event.ENTER_FRAME, ActivateShield_enterFrameHandler);
 		}
 		

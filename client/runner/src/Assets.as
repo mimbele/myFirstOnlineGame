@@ -14,17 +14,20 @@ package
 		[Embed(source="../media/graphics/bgOpponent.png")] //940*250
 		public static const bgOpponent:Class;
 		
-		[Embed(source="../media/graphics/loading_bg.png")]
+		[Embed(source="../media/graphics/loading_bg.jpg")]
 		public static const loaging_bg:Class;
 		
-		[Embed(source="../media/graphics/btn.png")]
-		public static const backButton:Class;
-		
-		[Embed(source="../media/graphics/mainMenu_bg.png")]
+		[Embed(source="../media/graphics/mainMenu_bg.jpg")]
 		public static const mainMenu_bg:Class;
+						
+		[Embed(source="../media/graphics/lose_bg.jpg")]
+		public static const lose_bg:Class;
 		
-		[Embed(source="../media/graphics/gameOver_bg.png")]
-		public static const gameOver_bg:Class;
+		[Embed(source="../media/graphics/win_bg.jpg")]
+		public static const win_bg:Class;
+		
+		[Embed(source="../media/graphics/backBtn.jpg")]
+		public static const backBtn:Class;
 		
 		[Embed(source="../media/graphics/btn.png")]
 		public static const btn:Class;

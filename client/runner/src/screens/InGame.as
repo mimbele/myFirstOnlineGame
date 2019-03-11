@@ -57,6 +57,8 @@ package screens
 		
 		private var _opponent:Player;
 		
+		private var backBtn:Button;
+		
 		private var timePrevious:Number;
 		private var timeCurrent:Number;
 		private var elapsed:Number;
@@ -94,7 +96,15 @@ package screens
 			this.addChild(bgPlayer);
 			this.addChild(bgOpponent);
 			
-			//trace (NetworkManager.getInstance().sfs.mySelf.playerId);
+			
+			backBtn = new Button(Assets.getTexture("btn"), "BACK");
+			backBtn.addEventListener(Event.TRIGGERED, backBtn_clickHandler);
+			backBtn.width = 100;
+			backBtn.height = 50;
+			backBtn.x = stage.stageWidth - backBtn.width - 10;
+			backBtn.y = 50;
+			this.addChild(backBtn);
+			
 			_player = new Player(this, true, stage.height-100);
 			opponent = new Player(this, false, stage.height-350);
 			this.addChild(player);
@@ -104,6 +114,12 @@ package screens
 			this.addEventListener(TouchEvent.TOUCH, this_touchHandler);
 			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.PUBLIC_MESSAGE, onPublicMessage);
 			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.EXTENSION_RESPONSE, onResponse);
+		}
+		
+		private function backBtn_clickHandler(e:Event):void 
+		{
+			backBtn.removeEventListener(Event.TRIGGERED, backBtn_clickHandler);
+			trace("back btn clicked");
 		}
 		
 		private function onResponse(evt:SFSEvent):void 
