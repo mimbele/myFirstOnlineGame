@@ -19,6 +19,8 @@ package objects
 		
 		public var id:Number;
 		
+		public static var globalSpeed;
+		
 		
 		public function Obstacle(inGame:InGame, id, isRoof:Boolean, speed:Number, x, y, startTime)
 		{
@@ -30,7 +32,7 @@ package objects
 			this.id = id;
 			this.y = y;
 			this.startTime = startTime;
-			
+			globalSpeed = speed;
 			if (isRoof){
 				ObstacleImage = new Image(Assets.getTexture("roofObstacle"));
 			}else{
@@ -47,7 +49,7 @@ package objects
 		private function this_enterFrameHandler(e:Event):void 
 		{
 			var now:Number = NetworkManager.getNow();
-			this.x = startX - ((now - startTime) * obSpeed * 0.001);
+			this.x = startX - ((now - startTime) * globalSpeed * 0.001);
 			if ((this.bounds.intersects(gameRef.player.bounds)) && (gameRef.player.hasShield == false))
 			{
 				gameRef.removeChild(this);

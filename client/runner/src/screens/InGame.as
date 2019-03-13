@@ -3,13 +3,13 @@ package screens
 	import com.smartfoxserver.v2.core.SFSEvent;
 	import com.smartfoxserver.v2.entities.User;
 	import com.smartfoxserver.v2.entities.data.SFSObject;
+	import feathers.controls.Screen;
 	import objects.HUD;
 	import objects.Item;
 	import starling.events.KeyboardEvent;
 	import objects.Player;
 	import starling.display.Button;
 	import starling.display.Image;
-	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.TouchEvent;
 	import starling.events.Touch;
@@ -27,7 +27,7 @@ package screens
 	 * @author mimbele
 	 */
 	[Event(name = "stateChange", type = "starling.events.Event")]
-	public class InGame extends Sprite
+	public class InGame extends Screen
 	{
 		private var bgPlayer:backGround;
 		private var bgOpponent:backGround;
@@ -145,8 +145,12 @@ package screens
 				var x = params.getFloat("x");
 				var x2 = params.getFloat("item_x");
 				var user = params.getInt("user");
+				var has_obstacle = params.getBool("has_obstacle");
 				var speed = params.getFloat("speed");
+				Obstacle.globalSpeed = speed;
 				var isroof = params.getBool("isroof");
+				if (!has_obstacle)
+					isroof = false;
 				var time = params.getLong("time");
 				var id = params.getInt("id");
 				var item = params.getUtfString("item");
@@ -170,21 +174,32 @@ package screens
 						y = stage.stageHeight - 60 -250;
 				}
 				var now:Number = NetworkManager.getNow();
-				var obstacle:Obstacle = new Obstacle(this, id, isroof, speed, stage.stageWidth + x, y, time - NetworkManager.getInstance().ServerTimeDiff);
-				
-				if (isMine)
-						y = stage.stageHeight - 100 - x2 * 0.3;
+				if (has_obstacle)
+					var obstacle:Obstacle = new Obstacle(this, id, isroof, speed, stage.stageWidth + x, y, time - NetworkManager.getInstance().ServerTimeDiff);
 				else
-					y = stage.stageHeight - 100 - 250 - x2 * 0.3;
-				
-				if (item == "HEAL")
 				{
-					var item:Item = new Item(this, id, "HEAL", speed, stage.stageWidth + x + x2 + 75, y, time - NetworkManager.getInstance().ServerTimeDiff);
-				} else if (item == "SHIELD")
-				{
-					var item:Item = new Item(this, id, "SHIELD", speed, stage.stageWidth + x + x2 + 75, y, time - NetworkManager.getInstance().ServerTimeDiff);
+					if (item == "HEAL")
+					{
+						var item:Item = new Item(this, id, "HEAL", speed, stage.stageWidth + x + 75, y - 50, time - NetworkManager.getInstance().ServerTimeDiff);
+					} else if (item == "SHIELD")
+					{
+						var item:Item = new Item(this, id, "SHIELD", speed, stage.stageWidth + x + 75, y - 50, time - NetworkManager.getInstance().ServerTimeDiff);
+					}
 				}
+				//if (isMine)
+						//y = stage.stageHeight - 100 - x2 * 0.3;
+				//else
+					//y = stage.stageHeight - 100 - 250 - x2 * 0.3;
+				
+				//if (item == "HEAL")
+				//{
+					//var item:Item = new Item(this, id, "HEAL", speed, stage.stageWidth + x + x2 + 75, y, time - NetworkManager.getInstance().ServerTimeDiff);
+				//} else if (item == "SHIELD")
+				//{
+					//var item:Item = new Item(this, id, "SHIELD", speed, stage.stageWidth + x + x2 + 75, y, time - NetworkManager.getInstance().ServerTimeDiff);
+				//}
 			}
+
 		}
 		
 		private function onPublicMessage(evt:SFSEvent):void 
@@ -234,7 +249,8 @@ package screens
 					timer.addEventListener(TimerEvent.TIMER_COMPLETE, function (e):void {
 						opponent.TakeDamage(params.getInt("damage"));
 						if (opponent.life < 0)
-							self.addChild(new GameOver(player, opponent, true));
+							//self.addChild(new GameOver(player, opponent, true));
+							GameHolder.getInstance().navigator.pushScreen(GameHolder.GAME_OVER);
 						for (var i = 0; i < numChildren; i++)
 						{
 							if (getChildAt(i).name == "obstacle" && (getChildAt(i) as Obstacle).id == params.getInt("obstacle"))
@@ -267,7 +283,8 @@ package screens
 			
 			if (player.life < 0 && !gameHasEnded){
 				gameHasEnded = true;
-				this.addChild(new GameOver(player, opponent, false));
+				//this.addChild(new GameOver(player, opponent, false));
+				GameHolder.getInstance().navigator.pushScreen(GameHolder.GAME_OVER);
 				//removeFromParent(this);
 			}
 		}

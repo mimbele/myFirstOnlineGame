@@ -1,6 +1,8 @@
 package screens
 {
 	import com.smartfoxserver.v2.core.SFSEvent;
+	import feathers.controls.Screen;
+	import feathers.layout.AnchorLayout;
 	import screens.InGame;
 	//import starling.display.Button;
 	import starling.display.Image;
@@ -11,7 +13,7 @@ package screens
 	import feathers.controls.TextCallout;
 	import feathers.themes.MinimalMobileTheme;
 	
-	public class MainMenu extends Sprite
+	public class MainMenu extends Screen
 	{
 		public static var instance:MainMenu = null;
 		private var bgImage:Image;
@@ -19,15 +21,24 @@ package screens
 		private var findButton:Button;
 		
 		public function MainMenu()
-		{
-			new MinimalMobileTheme();
-			
+		{			
 			super();
 			
 			this.addEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
 			instance = this;
 			name = "MainMenu";
+			
 		}
+	
+				
+		override protected function initialize():void
+		{
+			super.initialize();
+			//this.layout = new AnchorLayout();
+		}
+		
+				
+		
 		
 		private function onAddedToStage():void
 		{
@@ -59,6 +70,7 @@ package screens
 				findButton.validate();
 				findButton.x = (Main.GLOBAL_STAGE.stageWidth - findButton.width) / 2;
 			});
+			
 		}
 		
 		function onEnterFrame():void
@@ -73,9 +85,7 @@ package screens
 			var cmd:String = e.params["cmd"] as String;
 			if (cmd == "start_game")
 			{
-				trace(parent.name + " - > MAIN MENU");
-				parent.addChild(new InGame());
-				removeFromParent(true);
+				GameHolder.getInstance().navigator.pushScreen(GameHolder.IN_GAME);
 				NetworkManager.getInstance().sfs.removeEventListener(SFSEvent.EXTENSION_RESPONSE, onResponse);
 			}
 		}

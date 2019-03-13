@@ -50,7 +50,7 @@ package objects
 		private function this_enterFrameHandler(e:Event):void 
 		{
 			var now:Number = NetworkManager.getNow();
-			this.x = startX - ((now - startTime) * speed * 0.001);
+			this.x = startX - ((now - startTime) * Obstacle.globalSpeed * 0.001);
 			if (this.bounds.intersects(gameRef.player.bounds))
 			{
 				gameRef.removeChild(this);

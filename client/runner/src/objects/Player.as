@@ -77,6 +77,7 @@ package objects
 			
 			state = IDLE;
 			velY = 0;
+			startingY += 40;
 			this.startingY = startingY;
 			y = startingY;
 			playerImage = new Image(playerTexture);
@@ -141,7 +142,13 @@ package objects
 					state = IDLE;
 				}
 			}
-
+			if (_hasShield){
+				shieldTimeRemained --;
+				if (shieldTimeRemained < 0){
+					_hasShield = false;
+					shieldTimeRemained = 0;
+				}
+			}
 		}
 		
 		public function crouch(e:Event):void 
@@ -182,18 +189,8 @@ package objects
 		public function ActivateShield(){
 			_hasShield = true;
 			shieldTimeRemained = 200;
-			this.addEventListener(Event.ENTER_FRAME, ActivateShield_enterFrameHandler);
 		}
 		
-		private function ActivateShield_enterFrameHandler(e:Event):void 
-		{
-			shieldTimeRemained --;
-			if (shieldTimeRemained < 0){
-				_hasShield = false;
-				shieldTimeRemained = 0;
-				this.removeEventListener(Event.ENTER_FRAME, ActivateShield_enterFrameHandler);
-			}
-		}
 		
 		private function stateChangeHandler(e:Event):void 
 		{

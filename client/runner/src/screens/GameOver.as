@@ -1,18 +1,18 @@
 package screens
 {
 	import com.smartfoxserver.v2.requests.LeaveRoomRequest;
+	import feathers.controls.Screen;
 	import objects.Player;
 	import screens.InGame;
 	import starling.display.Button;
 	import starling.display.Image;
-	import starling.display.Sprite;
 	import starling.events.Event;
 	
 	/**
 	 * ...
 	 * @author mimbele
 	 */
-	public class GameOver extends Sprite
+	public class GameOver extends Screen
 	{
 		private var bgImage:Image;		
 		private var backBtn:Button;
