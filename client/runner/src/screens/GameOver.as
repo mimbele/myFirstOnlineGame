@@ -21,21 +21,20 @@ package screens
 		private var gameRef:InGame;
 		
 		
-		public function GameOver(inGame:InGame, me:Player, opponent:Player, hasWon:Boolean) // me and opponent refrences are for showing score
+		public function GameOver( me:Player, opponent:Player, hasWon:Boolean) // me and opponent refrences are for showing score
 		{
 			super();
 			this.me = me;
 			this.opponent = opponent;
 			this.hasWon = hasWon;
-			gameRef = inGame;
+			//gameRef = inGame;
 			
 			this.addEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
 		private function onAddedToStage():void
 		{
-			this.removeEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
-			var btnText:String;
+			//this.removeEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
 			
 			if (hasWon){
 				bgImage = new Image(Assets.getTexture("win_bg"));
@@ -65,6 +64,8 @@ package screens
 		{
 			backBtn.removeEventListener(Event.TRIGGERED, backBtn_clickHandler);
 			trace("back btn clicked");
+			parent.addChild(new InGame());
+			removeFromParent(this);
 		}
 	}
 }

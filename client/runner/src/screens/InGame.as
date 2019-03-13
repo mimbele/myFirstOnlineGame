@@ -64,6 +64,7 @@ package screens
 		private var elapsed:Number;
 		private var obstacleGap:Number;
 		private var touchHandler:TouchHandler;
+		private var gameHasEnded:Boolean;
 		
 		public const GRAVITY:Number = 9.81;
 		public const BG_SPEED:Number = 300;
@@ -88,6 +89,7 @@ package screens
 			touchHandler = new TouchHandler(stage);
 			obstacleGap = 0;
 			elapsed = 0;
+			gameHasEnded = false;
 			
 			bgPlayer = new backGround(true, BG_SPEED, this);
 			bgOpponent = new backGround(false, BG_SPEED, this);
@@ -129,6 +131,8 @@ package screens
 			
 			if (cmd == "spawn_obstacle")
 			{
+				if (gameHasEnded)
+					return;
 				var x = params.getFloat("x");
 				var x2 = params.getFloat("item_x");
 				var user = params.getInt("user");
@@ -176,6 +180,8 @@ package screens
 		
 		private function onPublicMessage(evt:SFSEvent):void 
 		{
+			if (gameHasEnded)
+				return;
 			var sender:User = evt.params.sender;
          
 			if (sender == NetworkManager.getInstance().sfs.mySelf)
@@ -210,7 +216,11 @@ package screens
 					var timer:Timer = new Timer(delay, 1);
 					timer.addEventListener(TimerEvent.TIMER_COMPLETE, function (e):void {
 						opponent.TakeDamage(params.getInt("damage"));
-						
+						if (opponent.life < 0){
+							gameHasEnded = true;
+							parent.addChild(new GameOver(player, opponent, true));
+							//removeFromParent(this);
+						}
 						for (var i = 0; i < numChildren; i++)
 						{
 							if (getChildAt(i).name == "obstacle" && (getChildAt(i) as Obstacle).id == params.getInt("obstacle"))
@@ -240,6 +250,12 @@ package screens
 			timePrevious = timeCurrent;
 			timeCurrent = getTimer();
 			elapsed = (timeCurrent - timePrevious) * 0.001;
+			
+			if (player.life < 0){
+				gameHasEnded = true;
+				parent.addChild(new GameOver(player, opponent, false));
+				//removeFromParent(this);
+			}
 		}
 		
 	}
