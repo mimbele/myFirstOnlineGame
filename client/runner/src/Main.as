@@ -10,16 +10,19 @@ package
 	import screens.InGame;
 	import screens.MainMenu;
 	import screens.GameOver;
+	import screens.GameHolder;
 	import screens.UserInfo;
 	import starling.core.Starling;
 	import utils.ProgressBar;
 	import starling.animation.DelayedCall;
 	import flash.events.TimerEvent;
 	import flash.utils.getTimer;
+
 	
 	[SWF(frameRate="60",width="940", height="540", backgroundColor="0x333333")]
 	public class Main extends Sprite
 	{
+		public static var GLOBAL_STAGE;
 		private var myStarling:Starling;
 		private var progress:ProgressBar;
 		private var userinfo:UserInfo;
@@ -28,6 +31,7 @@ package
 
 			//stage.scaleMode = StageScaleMode.SHOW_ALL;
 			stage.align = StageAlign.TOP_LEFT;
+			GLOBAL_STAGE = stage;
 			
 			progress = new ProgressBar(500, 40);
 			progress.x = (stage.stageWidth - progress.width ) * 0.5;
@@ -42,7 +46,7 @@ package
 			loaderInfo.removeEventListener(Event.COMPLETE, loader_eventCompleteHandler);
 			progress.ratio = 0.1;
 
-			myStarling = new Starling(MainMenu, stage);
+			myStarling = new Starling(GameHolder, stage);
 			myStarling.skipUnchangedFrames = true;
 			myStarling.antiAliasing = 1;
 			myStarling.showStatsAt();

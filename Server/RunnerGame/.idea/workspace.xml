@@ -9,14 +9,8 @@
     <list default="true" id="b0a31a95-440c-4529-a865-2a21b6bdca9b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RunnerGame/com/runnergame/LoginEventHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RunnerGame/com/runnergame/LoginEventHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/runnergame/LoginEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/runnergame/LoginEventHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RunnerGame/com/runnergame/RoomExtension$SpawnObstacles.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RunnerGame/com/runnergame/RoomExtension$SpawnObstacles.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/runnergame/RoomExtension.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/runnergame/RoomExtension.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/runner/src/Main.as" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/runner/src/Main.as" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/runner/src/NetworkManager.as" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/runner/src/NetworkManager.as" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/runner/src/objects/Item.as" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/runner/src/objects/Item.as" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/runner/src/screens/InGame.as" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/runner/src/screens/InGame.as" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/runner/src/screens/MainMenu.as" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/runner/src/screens/MainMenu.as" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../client/runner/src/screens/UserInfo.as" beforeDir="false" afterPath="$PROJECT_DIR$/../../client/runner/src/screens/UserInfo.as" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/runnergame/RoomExtension.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="379">
-              <caret line="54" column="112" selection-start-line="54" selection-start-column="112" selection-end-line="54" selection-end-column="112" />
+            <state relative-caret-position="175">
+              <caret line="48" selection-start-line="48" selection-end-line="56" selection-end-column="120" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -42,7 +36,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/runnergame/ZoneExtension.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
+            <state relative-caret-position="153">
               <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -66,7 +60,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/runnergame/UserJoinHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
+            <state relative-caret-position="255">
               <caret line="21" column="32" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -75,7 +69,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/runnergame/LoginEventHandler.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="260">
@@ -106,8 +100,8 @@
         <option value="$PROJECT_DIR$/src/com/runnergame/ZoneExtension.java" />
         <option value="$PROJECT_DIR$/src/com/runnergame/PingHandler.java" />
         <option value="$PROJECT_DIR$/src/com/runnergame/UserJoinHandler.java" />
-        <option value="$PROJECT_DIR$/src/com/runnergame/RoomExtension.java" />
         <option value="$PROJECT_DIR$/src/com/runnergame/LoginEventHandler.java" />
+        <option value="$PROJECT_DIR$/src/com/runnergame/RoomExtension.java" />
       </list>
     </option>
   </component>
@@ -117,7 +111,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="10" />
     <option name="y" value="20" />
     <option name="width" value="1346" />
@@ -131,8 +125,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -176,11 +170,12 @@
       <workItem from="1551494020414" duration="3670000" />
       <workItem from="1551803977413" duration="2225000" />
       <workItem from="1551945137107" duration="5636000" />
+      <workItem from="1552235027331" duration="2885000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26632000" />
+    <option name="totallyTimeSpent" value="29517000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -192,10 +187,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2655068" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26928896" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -213,8 +207,8 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" />
-      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5181543" side_tool="true" visible="true" weight="0.22913256" />
-      <window_info active="true" anchor="bottom" id="Messages" order="12" sideWeight="0.48184568" visible="true" weight="0.22913256" />
+      <window_info active="true" anchor="bottom" id="Event Log" order="11" sideWeight="0.51891077" side_tool="true" visible="true" weight="0.22913256" />
+      <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.48108926" visible="true" weight="0.22913256" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Maven" order="1" weight="0.32980332" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
@@ -245,6 +239,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/runnergame/ZoneExtension.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/runnergame/PingHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -257,28 +261,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/runnergame/UserJoinHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
+        <state relative-caret-position="255">
           <caret line="21" column="32" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/runnergame/ZoneExtension.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/runnergame/RoomExtension.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="379">
-          <caret line="54" column="112" selection-start-line="54" selection-start-column="112" selection-end-line="54" selection-end-column="112" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -289,6 +273,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
           <caret line="65" column="60" selection-start-line="65" selection-start-column="60" selection-end-line="65" selection-end-column="60" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/runnergame/RoomExtension.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="48" selection-start-line="48" selection-end-line="56" selection-end-column="120" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

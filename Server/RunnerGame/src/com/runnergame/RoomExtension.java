@@ -43,10 +43,12 @@ public class RoomExtension extends  SFSExtension
         @Override
         public void run()
         {
-            if (ticks % 7 == 0)
+            if (ticks % 5 == 0)
             {
                 SFSObject params = new SFSObject();
                 params.putFloat("x", (float)Math.random() * 200);
+                params.putFloat("item_x", (float)Math.random() * 100);
+                params.putBool("has_obstacle", Math.random() < 0.5f);
                 params.putFloat("speed", 400);
                 params.putBool("isroof", Math.random() < 0.5f);
                 params.putInt("user", spawnTurn);

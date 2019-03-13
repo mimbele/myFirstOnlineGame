@@ -63,7 +63,7 @@ package objects
 			this.isMe = isMe;
 			this.inGame = inGame;
 			speed = 400;
-			_life = 1;
+			_life = 1000;
 			_hasShield = false;
 			shieldTimeRemained = 0;
 			

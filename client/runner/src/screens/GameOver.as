@@ -1,5 +1,6 @@
 package screens
 {
+	import com.smartfoxserver.v2.requests.LeaveRoomRequest;
 	import objects.Player;
 	import screens.InGame;
 	import starling.display.Button;
@@ -27,6 +28,7 @@ package screens
 			this.me = me;
 			this.opponent = opponent;
 			this.hasWon = hasWon;
+			name = "GAME OVER";
 			//gameRef = inGame;
 			
 			this.addEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
@@ -63,9 +65,9 @@ package screens
 		private function backBtn_clickHandler(e:Event):void 
 		{
 			backBtn.removeEventListener(Event.TRIGGERED, backBtn_clickHandler);
-			trace("back btn clicked");
-			parent.addChild(new InGame());
-			removeFromParent(this);
+			NetworkManager.getInstance().sfs.send(new LeaveRoomRequest());
+			removeFromParent(true);
+			NetworkManager.getInstance().dispatchEventWith("disconnect");
 		}
 	}
 }

@@ -75,6 +75,7 @@ package screens
 		{
 			super();
 			this.addEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
+			name = "INGAME";
 		}
 		
 		private function onAddedToStage(event:Event):void
@@ -116,6 +117,14 @@ package screens
 			this.addEventListener(TouchEvent.TOUCH, this_touchHandler);
 			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.PUBLIC_MESSAGE, onPublicMessage);
 			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.EXTENSION_RESPONSE, onResponse);
+			NetworkManager.getInstance().addEventListener("disconnect", onDisconnect);
+		}
+		
+		private function onDisconnect(e:Event):void 
+		{
+			trace(parent.name);
+			parent.addChild(new MainMenu());
+			removeFromParent(true);
 		}
 		
 		private function backBtn_clickHandler(e:Event):void 
@@ -207,20 +216,25 @@ package screens
 					var timer:Timer = new Timer(delay, 1);
 					timer.addEventListener(TimerEvent.TIMER_COMPLETE, function (e):void {opponent.crouch(null);});
 					timer.start();
+					
 				}
 			}
 			else if (evt.params["message"] = "take_damage")
 			{
+				if (delay < 0)
+					delay = 1;
 				if (delay > 0)
 				{
+					if (opponent.life-params.getInt("damage") < 0){
+						gameHasEnded = true;
+						trace("Enemy lost");
+					}
 					var timer:Timer = new Timer(delay, 1);
+					var self:InGame = this;
 					timer.addEventListener(TimerEvent.TIMER_COMPLETE, function (e):void {
 						opponent.TakeDamage(params.getInt("damage"));
-						if (opponent.life < 0){
-							gameHasEnded = true;
-							parent.addChild(new GameOver(player, opponent, true));
-							//removeFromParent(this);
-						}
+						if (opponent.life < 0)
+							self.addChild(new GameOver(player, opponent, true));
 						for (var i = 0; i < numChildren; i++)
 						{
 							if (getChildAt(i).name == "obstacle" && (getChildAt(i) as Obstacle).id == params.getInt("obstacle"))
@@ -251,9 +265,9 @@ package screens
 			timeCurrent = getTimer();
 			elapsed = (timeCurrent - timePrevious) * 0.001;
 			
-			if (player.life < 0){
+			if (player.life < 0 && !gameHasEnded){
 				gameHasEnded = true;
-				parent.addChild(new GameOver(player, opponent, false));
+				this.addChild(new GameOver(player, opponent, false));
 				//removeFromParent(this);
 			}
 		}

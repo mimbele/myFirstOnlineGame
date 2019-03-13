@@ -26,7 +26,7 @@ package screens
 			
 			this.addEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);
 			instance = this;
-		
+			name = "MainMenu";
 		}
 		
 		private function onAddedToStage():void
@@ -51,13 +51,13 @@ package screens
 			{
 				findButton.label = "CANCEL";
 				findButton.validate();
-				findButton.x = (stage.stageWidth - findButton.width) / 2;
+				findButton.x = (Main.GLOBAL_STAGE.stageWidth - findButton.width) / 2;
 			});
 			NetworkManager.getInstance().addEventListener("2", function()
 			{
 				findButton.label = "FIND OPPONENT";
 				findButton.validate();
-				findButton.x = (stage.stageWidth - findButton.width) / 2;
+				findButton.x = (Main.GLOBAL_STAGE.stageWidth - findButton.width) / 2;
 			});
 		}
 		
@@ -73,8 +73,9 @@ package screens
 			var cmd:String = e.params["cmd"] as String;
 			if (cmd == "start_game")
 			{
+				trace(parent.name + " - > MAIN MENU");
 				parent.addChild(new InGame());
-				removeFromParent(false);
+				removeFromParent(true);
 				NetworkManager.getInstance().sfs.removeEventListener(SFSEvent.EXTENSION_RESPONSE, onResponse);
 			}
 		}
