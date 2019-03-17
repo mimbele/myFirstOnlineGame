@@ -55,6 +55,9 @@ package objects
 			{
 				gameRef.removeChild(this);
 				
+				var itemEffect = new ParticleEffect(this.x - 20, this.y - 10);
+				gameRef.addChild(itemEffect);
+
 				if (type == "HEAL"){
 					gameRef.player.Heal(1);
 
@@ -66,6 +69,7 @@ package objects
 				NetworkManager.putTime(params);
 				params.putInt("item", id);
 				NetworkManager.getInstance().sfs.send(new PublicMessageRequest("item_picked", params));
+				
 			}
 			
 			if (this.x < -50)

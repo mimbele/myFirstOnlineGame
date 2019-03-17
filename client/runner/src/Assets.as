@@ -44,6 +44,18 @@ package
 		[Embed(source="../media/graphics/player.png")]
 		public static const player:Class;
 		
+		[Embed(source="../media/graphics/superPlayer_crouch.png")]
+		public static const superPlayer_crouch:Class;
+		
+		[Embed(source="../media/graphics/superOpponent_crouch.png")]
+		public static const superOpponent_crouch:Class;
+		
+		[Embed(source="../media/graphics/superOpponent.png")]
+		public static const superOpponent:Class;
+		
+		[Embed(source="../media/graphics/superPlayer.png")]
+		public static const superPlayer:Class;
+		
 		[Embed(source="../media/graphics/obstacle.png")]
 		public static const obstacle:Class;
 		
@@ -64,6 +76,9 @@ package
 		
 		[Embed(source="../media/graphics/healItem.png")] //34x30
 		public static const healItem:Class;
+		
+		[Embed(source="../media/graphics/particle.png")] //34x30
+		public static const Particle:Class;
 		
 		private static var gameTextures:Dictionary = new Dictionary();
 		

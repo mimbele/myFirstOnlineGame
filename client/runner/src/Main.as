@@ -62,7 +62,7 @@ package
 		
 		private function connect():void
 		{
-			NetworkManager.getInstance().Connect("192.168.10.132", 9933);
+			NetworkManager.getInstance().Connect("127.0.0.1", 9933);
 			NetworkManager.getInstance().sfs.addEventListener(SFSEvent.CONNECTION, function (e):void{
 				if (e.params.success)
 				{

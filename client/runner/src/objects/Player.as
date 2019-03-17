@@ -2,6 +2,7 @@ package objects
 {
 	import com.smartfoxserver.v2.entities.data.SFSObject;
 	import com.smartfoxserver.v2.requests.PublicMessageRequest;
+	import feathers.controls.Screen;
 	import screens.InGame;
 	import starling.display.Image;
 	import starling.display.Sprite;
@@ -17,6 +18,8 @@ package objects
 		private var inGame:InGame;
 		private var playerTexture:Texture;
 		private var playerTexture_crouching:Texture;
+		private var superPlayerTexture:Texture;
+		private var superPlayerTexture_crouching:Texture;
 		
 		private var velY:Number;
 		private var startingY:Number;
@@ -24,6 +27,7 @@ package objects
 		private var _nextAction:Function;
 		private var _hasShield:Boolean;
 		private var shieldTimeRemained:Number;
+		private var damageEffectTime:Number;
 		
 		public function get hasShield():Boolean 
 		{
@@ -70,9 +74,13 @@ package objects
 			if (isMe){
 				playerTexture = Assets.getTexture("player");
 				playerTexture_crouching = Assets.getTexture("player_crouch");
+				superPlayerTexture = Assets.getTexture("superPlayer");
+				superPlayerTexture_crouching = Assets.getTexture("superPlayer_crouch");
 			} else {
 				playerTexture = Assets.getTexture("opponent");
 				playerTexture_crouching = Assets.getTexture("opponent_crouch");
+				superPlayerTexture = Assets.getTexture("superOpponent");
+				superPlayerTexture_crouching = Assets.getTexture("superOpponent_crouch");
 			}
 			
 			state = IDLE;
@@ -149,6 +157,23 @@ package objects
 					shieldTimeRemained = 0;
 				}
 			}
+			if (damageEffectTime > 0){
+				if (damageEffectTime >= 50){ //camera shake
+					inGame.x = int(Math.random() * damageEffectTime * 0.3);
+					inGame.y = int(Math.random() * damageEffectTime * 0.3);
+					if (damageEffectTime == 50){
+						inGame.x = 0;
+						inGame.y = 0;
+					}
+				}
+				if (damageEffectTime < 20){
+					playerImage.alpha = 1;
+				} else if (damageEffectTime % 10 == 0){
+					playerImage.alpha = (playerImage.alpha == 1) ? 0.3 : 1;
+				}
+				damageEffectTime --;
+			}
+			
 		}
 		
 		public function crouch(e:Event):void 
@@ -179,6 +204,10 @@ package objects
 		public function TakeDamage(dmg):void
 		{
 			_life -= dmg;
+			if (isMe){
+				damageEffectTime = 80;
+				playerImage.alpha = 0.3;
+			}
 		}
 		
 		public function Heal(heal):void
@@ -189,18 +218,27 @@ package objects
 		public function ActivateShield(){
 			_hasShield = true;
 			shieldTimeRemained = 200;
+			state = state;
 		}
 		
 		
 		private function stateChangeHandler(e:Event):void 
 		{
 			if (state == CROUCHING){
-				playerImage.texture = playerTexture_crouching;
+				if (hasShield)
+					playerImage.texture = superPlayerTexture_crouching;
+				else 
+					playerImage.texture = playerTexture_crouching;
+				
 				velY = 0;
 				y = startingY+30;
 				
-			} else if(state == IDLE) {
-				playerImage.texture = playerTexture;
+			} else if (state == IDLE) {
+				if (hasShield)
+					playerImage.texture = superPlayerTexture;
+				else 
+					playerImage.texture = playerTexture;
+				
 				y = startingY;
 			}
 			
