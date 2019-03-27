@@ -48,17 +48,16 @@ package screens
 			findButton = new Button();
 			findButton.label = "FIND OPPONENT";
 			this.addChild(findButton);
-					
-			
 			findButton.validate();
-			findButton.x = (stage.stageWidth - findButton.width) / 2;
+			findButton.x = (stage.stageWidth/2) - (findButton.width/2);
 			findButton.y = (stage.stageHeight - findButton.height) / 2;
 			
 			aboutButton = new Button();
 			aboutButton.label = "ABOUT";
-			aboutButton.x = (stage.stageWidth - aboutButton.width) / 2;
-			aboutButton.y = findButton.y + findButton.height + 20;
 			this.addChild(aboutButton);
+			aboutButton.validate();
+			aboutButton.x = (stage.stageWidth / 2) - (aboutButton.width / 2);
+			aboutButton.y = findButton.y + findButton.height + 20;
 			
 			aboutButton.addEventListener(Event.TRIGGERED, aboutBtn_clickHandler);
 			

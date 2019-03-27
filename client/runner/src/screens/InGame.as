@@ -63,9 +63,7 @@ package screens
 		}
 		
 		private var _opponent:Player;
-		
-		private var backBtn:Button;
-		
+				
 		private var timePrevious:Number;
 		private var timeCurrent:Number;
 		private var elapsed:Number;
@@ -106,15 +104,6 @@ package screens
 			this.addChild(bgPlayer);
 			this.addChild(bgOpponent);
 			
-			
-			backBtn = new Button(Assets.getTexture("btn"), "BACK");
-			backBtn.addEventListener(Event.TRIGGERED, backBtn_clickHandler);
-			backBtn.width = 100;
-			backBtn.height = 50;
-			backBtn.x = stage.stageWidth - backBtn.width - 10;
-			backBtn.y = 50;
-			this.addChild(backBtn);
-			
 			_player = new Player(this, true, stage.height-100);
 			opponent = new Player(this, false, stage.height-350);
 			this.addChild(player);
@@ -132,12 +121,6 @@ package screens
 			trace(parent.name);
 			parent.addChild(new MainMenu());
 			removeFromParent(true);
-		}
-		
-		private function backBtn_clickHandler(e:Event):void 
-		{
-			backBtn.removeEventListener(Event.TRIGGERED, backBtn_clickHandler);
-			trace("back btn clicked");
 		}
 		
 		private function onResponse(evt:SFSEvent):void 
@@ -250,8 +233,8 @@ package screens
 					if (opponent.life-params.getInt("damage") < 0){
 						gameHasEnded = true;
 						trace("Enemy lost");
-						//this.info.hasWon = true;
-						//this.dispatchEventWith(FINISH_GAME);
+						this.info.hasWon = true;
+						this.dispatchEventWith(FINISH_GAME);
 						//GameHolder.getInstance().navigator.pushScreen(GameHolder.GAME_OVER);
 					}
 					var timer:Timer = new Timer(delay, 1);
@@ -259,10 +242,8 @@ package screens
 					timer.addEventListener(TimerEvent.TIMER_COMPLETE, function (e):void {
 						opponent.TakeDamage(params.getInt("damage"));
 						if (opponent.life < 0){
-							//self.addChild(new GameOver(player, opponent, true));
-							
-							this.info.hasWon = true;
-							this.dispatchEventWith(FINISH_GAME);
+							//this.info.hasWon = true;
+							//this.dispatchEventWith(FINISH_GAME);
 							//GameHolder.getInstance().navigator.pushScreen(GameHolder.GAME_OVER);
 						}
 						for (var i = 0; i < numChildren; i++)
@@ -297,9 +278,7 @@ package screens
 			
 			if (player.life < 0 && !gameHasEnded){
 				gameHasEnded = true;
-				trace("i lost");
-				//this.addChild(new GameOver(player, opponent, false));
-				
+				trace("I lost");
 				this.info.hasWon = false;
 				this.dispatchEventWith(FINISH_GAME);
 				//GameHolder.getInstance().navigator.pushScreen(GameHolder.GAME_OVER);

@@ -38,10 +38,10 @@ package objects
 			bgImage = new Image(Assets.getTexture("HUD_bg"));
 			this.addChild(bgImage);
 			
-			yourHeartImage = new Image(Assets.getTexture("redHeart"));
+			yourHeartImage = new Image(Assets.getTexture("blueHeart"));
 			this.addChild(yourHeartImage);
 			
-			opponentHeartImage = new Image(Assets.getTexture("blueHeart"));
+			opponentHeartImage = new Image(Assets.getTexture("redHeart"));
 			this.addChild(opponentHeartImage);
 			
 			shieldImage = new Image(Assets.getTexture("shieldItem"));

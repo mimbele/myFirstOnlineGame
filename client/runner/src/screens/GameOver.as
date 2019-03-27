@@ -1,10 +1,10 @@
 package screens
 {
 	import com.smartfoxserver.v2.requests.LeaveRoomRequest;
+	import feathers.controls.Button;
 	import feathers.controls.Screen;
 	import objects.Player;
 	import screens.InGame;
-	import starling.display.Button;
 	import starling.display.Image;
 	import starling.events.Event;
 	import GameOverInfo;
@@ -43,18 +43,19 @@ package screens
 				bgImage = new Image(Assets.getTexture("win_bg"));
 				this.addChild(bgImage);
 				
-				backBtn = new Button(Assets.getTexture("btn"), "WIN AGAIN");
-				this.addChild(backBtn);
+				backBtn = new Button();
+				backBtn.label = "WIN AGAIN!";
 			} else{
 				bgImage = new Image(Assets.getTexture("lose_bg"));
 				this.addChild(bgImage);
 				
-				backBtn = new Button(Assets.getTexture("btn"), "TRY AGAIN");
-				this.addChild(backBtn);
+				backBtn = new Button();
+				backBtn.label = "TRY AGAIN";
 			}
 			
 			
-			
+			this.addChild(backBtn);
+			backBtn.validate();
 			backBtn.x = (stage.stageWidth - backBtn.width) / 2;
 			backBtn.y = (stage.stageHeight - backBtn.height) / 2 + 200;
 			
