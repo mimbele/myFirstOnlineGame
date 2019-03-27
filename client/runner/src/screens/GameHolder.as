@@ -26,6 +26,7 @@ package screens
 		static const IN_GAME:String = "inGame";
 		static const MAIN_MENU:String = "mainMenu";
 		static const GAME_OVER:String = "gameOver";
+		static const ABOUT:String = "about";
 		public static var _instance:GameHolder;
 		
 		
@@ -38,14 +39,22 @@ package screens
 			this.navigator = new StackScreenNavigator();
 			this.content = this.navigator;
 			
+			var gameOverInfo:GameOverInfo = new GameOverInfo();
 			var inGame:StackScreenNavigatorItem = new StackScreenNavigatorItem(InGame);
+			inGame.setScreenIDForPushEvent(InGame.FINISH_GAME, GAME_OVER);
 			inGame.addPopEvent(Event.COMPLETE);
+			inGame.properties.info = gameOverInfo;
 			this.navigator.addScreen(IN_GAME, inGame);
 			
 			var gameOver:StackScreenNavigatorItem = new StackScreenNavigatorItem(GameOver);
 			gameOver.addPopEvent(Event.COMPLETE);
+			gameOver.properties.info = gameOverInfo;
 			this.navigator.addScreen(GAME_OVER, gameOver);
 			
+			var about:StackScreenNavigatorItem = new StackScreenNavigatorItem(About);
+			about.addPopEvent(Event.COMPLETE);
+			this.navigator.addScreen(ABOUT, about);
+	
 			this._menu = new MainMenu();
 			var mainMenuItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(MainMenu);
 			this.navigator.addScreen(MAIN_MENU, mainMenuItem);

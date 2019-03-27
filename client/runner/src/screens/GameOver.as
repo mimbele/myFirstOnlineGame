@@ -7,6 +7,7 @@ package screens
 	import starling.display.Button;
 	import starling.display.Image;
 	import starling.events.Event;
+	import GameOverInfo;
 	
 	/**
 	 * ...
@@ -21,14 +22,14 @@ package screens
 		private var hasWon:Boolean;
 		private var gameRef:InGame;
 		
+		public var info:GameOverInfo;
 		
-		public function GameOver( me:Player, opponent:Player, hasWon:Boolean) // me and opponent refrences are for showing score
+		public function GameOver() // me and opponent refrences are for showing score
 		{
 			super();
-			this.me = me;
-			this.opponent = opponent;
-			this.hasWon = hasWon;
-			name = "GAME OVER";
+			//this.me = me;
+			//this.opponent = opponent;
+			this.hasWon = this.info.hasWon;
 			//gameRef = inGame;
 			
 			this.addEventListener(starling.events.Event.ADDED_TO_STAGE, onAddedToStage);

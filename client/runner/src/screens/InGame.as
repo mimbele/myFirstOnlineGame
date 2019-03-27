@@ -18,10 +18,14 @@ package screens
 	import flash.events.TimerEvent;
 	import flash.utils.getTimer;
 	import flash.utils.Timer;
+	import GameOverInfo;
 
 	import Assets;
 	import TouchHandler;
 	import objects.Obstacle;
+	
+	[Event(name = "finishGame", type = "starling.events.Event")]
+	
 	/**
 	 * ...
 	 * @author mimbele
@@ -29,6 +33,9 @@ package screens
 	[Event(name = "stateChange", type = "starling.events.Event")]
 	public class InGame extends Screen
 	{
+		static const FINISH_GAME:String = "finishGame";
+		public var info:GameOverInfo;
+		
 		private var bgPlayer:backGround;
 		private var bgOpponent:backGround;
 		private var hud:HUD;
@@ -243,14 +250,21 @@ package screens
 					if (opponent.life-params.getInt("damage") < 0){
 						gameHasEnded = true;
 						trace("Enemy lost");
+						//this.info.hasWon = true;
+						//this.dispatchEventWith(FINISH_GAME);
+						//GameHolder.getInstance().navigator.pushScreen(GameHolder.GAME_OVER);
 					}
 					var timer:Timer = new Timer(delay, 1);
 					var self:InGame = this;
 					timer.addEventListener(TimerEvent.TIMER_COMPLETE, function (e):void {
 						opponent.TakeDamage(params.getInt("damage"));
-						if (opponent.life < 0)
+						if (opponent.life < 0){
 							//self.addChild(new GameOver(player, opponent, true));
-							GameHolder.getInstance().navigator.pushScreen(GameHolder.GAME_OVER);
+							
+							this.info.hasWon = true;
+							this.dispatchEventWith(FINISH_GAME);
+							//GameHolder.getInstance().navigator.pushScreen(GameHolder.GAME_OVER);
+						}
 						for (var i = 0; i < numChildren; i++)
 						{
 							if (getChildAt(i).name == "obstacle" && (getChildAt(i) as Obstacle).id == params.getInt("obstacle"))
@@ -283,8 +297,12 @@ package screens
 			
 			if (player.life < 0 && !gameHasEnded){
 				gameHasEnded = true;
+				trace("i lost");
 				//this.addChild(new GameOver(player, opponent, false));
-				GameHolder.getInstance().navigator.pushScreen(GameHolder.GAME_OVER);
+				
+				this.info.hasWon = false;
+				this.dispatchEventWith(FINISH_GAME);
+				//GameHolder.getInstance().navigator.pushScreen(GameHolder.GAME_OVER);
 				//removeFromParent(this);
 			}
 		}
